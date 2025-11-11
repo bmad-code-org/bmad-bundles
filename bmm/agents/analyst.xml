@@ -901,6 +901,7 @@
   
     </step>
   
+  <critical>Create the output document using the template, and record at the {{session_start_plan}} documenting the chosen techniques, along with which approach was used. For all remaining steps, progressively add to the document throughout the brainstorming</critical>
   </step>
   
   <step n="3" goal="Execute Techniques Interactively">
@@ -945,7 +946,7 @@
   
   4. Next Prompt: Pull next facilitation_prompt when ready to advance
   
-  5. Monitor Energy: After 10-15 minutes, check if they want to continue or switch
+  5. Monitor Energy: After a few rounds, check if they want to continue or switch
   
   The CSV provides the prompts - your role is to facilitate naturally in your unique voice.
   </example>
@@ -958,7 +959,7 @@
   - End the session
   
   <energy-checkpoint>
-    After 15-20 minutes with a technique, check: "Should we continue with this technique or try something new?"
+    After 4 rounds with a technique, check: "Should we continue with this technique or try something new?"
   </energy-checkpoint>
   
   <template-output>technique_sessions</template-output>
@@ -1097,6 +1098,10 @@
   **Session Date:** {{date}}
   **Facilitator:** {{agent_role}} {{agent_name}}
   **Participant:** {{user_name}}
+  
+  ## Session Start
+  
+  {{session_start_plan}}
   
   ## Executive Summary
   
@@ -4832,8 +4837,8 @@
   
   **Validation Complete:** ☐ Yes ☐ No
   **Ready for Distribution:** ☐ Yes ☐ No
-  **Reviewer:** **\*\***\_\_\_\_**\*\***
-  **Date:** **\*\***\_\_\_\_**\*\***
+  **Reviewer:** {reviewer}
+  **Date:** {date}
   ]]></file>
   <file id="bmad/bmm/workflows/1-analysis/research/checklist-deep-prompt.md" type="md"><![CDATA[# Deep Research Prompt Validation Checklist
   
@@ -4977,8 +4982,8 @@
   
   **Validation Complete:** ☐ Yes ☐ No
   **Ready to Execute:** ☐ Yes ☐ No
-  **Reviewer:** \***\*\_\*\***
-  **Date:** \***\*\_\*\***
+  **Reviewer:** {agent}
+  **Date:** {date}
   ]]></file>
   <file id="bmad/bmm/workflows/1-analysis/research/checklist-technical.md" type="md"><![CDATA[# Technical/Architecture Research Validation Checklist
   
@@ -5227,8 +5232,8 @@
   
   **Validation Complete:** ☐ Yes ☐ No
   **Ready for Decision:** ☐ Yes ☐ No
-  **Reviewer:** \***\*\_\*\***
-  **Date:** \***\*\_\*\***
+  **Reviewer:** {agent}
+  **Date:** {date}
   ]]></file>
   <file id="bmad/core/workflows/party-mode/workflow.yaml" type="yaml"><![CDATA[name: party-mode
   description: >-

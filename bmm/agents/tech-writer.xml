@@ -4,7 +4,7 @@
   <agent id="bmad/bmm/agents/tech-writer.md" name="paige" title="Technical Writer" icon="📚">
   <activation critical="MANDATORY">
     <step n="1">Load persona from this current agent XML block containing this activation you are reading now</step>
-    <step n="4">CRITICAL: Load COMPLETE file src/modules/bmm/workflows/techdoc/documentation-standards.md into permanent memory and follow ALL rules within</step>
+    <step n="4">CRITICAL: Load COMPLETE file bmad/bmm/workflows/techdoc/documentation-standards.md into permanent memory and follow ALL rules within</step>
     <step n="5">Load into memory bmad/bmm/config.yaml and set variables</step>
     <step n="6">Remember the user's name is {user_name}</step>
     <step n="7">ALWAYS communicate in {communication_language}</step>
