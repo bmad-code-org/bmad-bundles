@@ -1037,6 +1037,9 @@
             <critical>
               This is a meta-workflow that orchestrates the CIS brainstorming workflow with game-specific context and additional game design techniques
             </critical>
+            <critical>
+              ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
+            </critical>
             <workflow>
               <step n="1" goal="Validate workflow readiness" tag="workflow-status">
                 <action>Check if {output_folder}/bmm-workflow-status.yaml exists</action>
@@ -1782,6 +1785,9 @@
                             Communicate all responses in {communication_language} and language MUST be tailored to {user_skill_level}
                           </critical>
                           <critical>Generate all documents in {document_output_language}</critical>
+                          <critical>
+                            ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
+                          </critical>
                           <critical>
                             DOCUMENT OUTPUT: Concise, professional, game-design focused. Use tables/lists over prose. User skill level ({user_skill_level}) affects conversation style ONLY, not document content.
                           </critical>
@@ -6163,29 +6169,31 @@
     game_dev_experience: "{config_source}:game_dev_experience"
     date: system-generated
     
-    # Input requirements - We work from GDD, Epics, and optionally Narrative Design
-    recommended_inputs:
-      - gdd: "Game Design Document with mechanics, systems, and features"
-      - epics: "Epic definitions with user stories and acceptance criteria"
-      - narrative: "Narrative design document with story and character systems (optional)"
-    
     # Smart input file references - handles both whole docs and sharded docs
     # Priority: Whole document first, then sharded version
     input_file_patterns:
       gdd:
+        description: "Game Design Document with mechanics and systems"
         whole: "{output_folder}/*gdd*.md"
         sharded: "{output_folder}/*gdd*/index.md"
+        load_strategy: "INDEX_GUIDED"
     
       epics:
+        description: "Epic definitions with user stories"
         whole: "{output_folder}/*epic*.md"
         sharded: "{output_folder}/*epic*/index.md"
+        load_strategy: "FULL_LOAD"
     
       narrative:
+        description: "Narrative design with story and characters (optional)"
         whole: "{output_folder}/*narrative*.md"
         sharded: "{output_folder}/*narrative*/index.md"
+        load_strategy: "INDEX_GUIDED"
     
       document_project:
+        description: "Brownfield project documentation (optional)"
         sharded: "{output_folder}/docs/index.md"
+        load_strategy: "INDEX_GUIDED"
     
     # Module path and component files
     installed_path: "bmad/bmgd/workflows/3-technical/game-architecture"
