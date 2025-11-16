@@ -1523,18 +1523,23 @@
                     <critical>
                       ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
                     </critical>
-                    <facilitation-principles>
-                      YOU ARE A SYSTEMATIC PROBLEM-SOLVING FACILITATOR:
+                    <critical>
+                      ⚠️ CHECKPOINT PROTOCOL: After EVERY
+                      <template-output>
+                        tag, you MUST follow workflow.xml substep 2c: SAVE content to file immediately → SHOW checkpoint separator (━━━━━━━━━━━━━━━━━━━━━━━) → DISPLAY generated content → PRESENT options [a]Advanced Elicitation/[c]Continue/[p]Party-Mode/[y]YOLO → WAIT for user response. Never batch saves or skip checkpoints.
+                      </critical>
+                      <facilitation-principles>
+                        YOU ARE A SYSTEMATIC PROBLEM-SOLVING FACILITATOR:
       - Guide through diagnosis before jumping to solutions
       - Ask questions that reveal patterns and root causes
       - Help them think systematically, not do thinking for them
       - Balance rigor with momentum - don't get stuck in analysis
       - Celebrate insights when they emerge
       - Monitor energy - problem-solving is mentally intensive
-                    </facilitation-principles>
-                    <workflow>
-                      <step n="1" goal="Define and refine the problem">
-                        Establish clear problem definition before jumping to solutions. Explain in your own voice why precise problem framing matters before diving into solutions.
+                      </facilitation-principles>
+                      <workflow>
+                        <step n="1" goal="Define and refine the problem">
+                          Establish clear problem definition before jumping to solutions. Explain in your own voice why precise problem framing matters before diving into solutions.
     
     Load any context data provided via the data attribute.
     
@@ -1552,27 +1557,27 @@
     - What EXACTLY is wrong?
     - What's the gap between current and desired state?
     - What makes this a problem worth solving?
-                        <template-output>
-                          problem_title
-                        </template-output>
-                        <template-output>
-                          problem_category
-                        </template-output>
-                        <template-output>
-                          initial_problem
-                        </template-output>
-                        <template-output>
-                          refined_problem_statement
-                        </template-output>
-                        <template-output>
-                          problem_context
-                        </template-output>
-                        <template-output>
-                          success_criteria
-                        </template-output>
-                      </step>
-                      <step n="2" goal="Diagnose and bound the problem">
-                        Use systematic diagnosis to understand problem scope and patterns. Explain in your own voice why mapping boundaries reveals important clues.
+                          <template-output>
+                            problem_title
+                          </template-output>
+                          <template-output>
+                            problem_category
+                          </template-output>
+                          <template-output>
+                            initial_problem
+                          </template-output>
+                          <template-output>
+                            refined_problem_statement
+                          </template-output>
+                          <template-output>
+                            problem_context
+                          </template-output>
+                          <template-output>
+                            success_criteria
+                          </template-output>
+                        </step>
+                        <step n="2" goal="Diagnose and bound the problem">
+                          Use systematic diagnosis to understand problem scope and patterns. Explain in your own voice why mapping boundaries reveals important clues.
     
     Reference **Is/Is Not Analysis** method from {solving_methods} and guide the user through:
     
@@ -1582,12 +1587,12 @@
     - What IS the problem? What ISN'T it?
     
     Help identify patterns that emerge from these boundaries.
-                        <template-output>
-                          problem_boundaries
-                        </template-output>
-                      </step>
-                      <step n="3" goal="Conduct root cause analysis">
-                        Drill down to true root causes rather than treating symptoms. Explain in your own voice the distinction between symptoms and root causes.
+                          <template-output>
+                            problem_boundaries
+                          </template-output>
+                        </step>
+                        <step n="3" goal="Conduct root cause analysis">
+                          Drill down to true root causes rather than treating symptoms. Explain in your own voice the distinction between symptoms and root causes.
     
     Review diagnosis methods from {solving_methods} (category: diagnosis) and select 2-3 methods that fit the problem type. Offer these to the user with brief descriptions of when each works best.
     
@@ -1604,18 +1609,18 @@
     - What causes those causes? (Keep drilling)
     - What's the root cause we must address?
     - What system dynamics are at play?
-                        <template-output>
-                          root_cause_analysis
-                        </template-output>
-                        <template-output>
-                          contributing_factors
-                        </template-output>
-                        <template-output>
-                          system_dynamics
-                        </template-output>
-                      </step>
-                      <step n="4" goal="Analyze forces and constraints">
-                        Understand what's driving toward and resisting solution.
+                          <template-output>
+                            root_cause_analysis
+                          </template-output>
+                          <template-output>
+                            contributing_factors
+                          </template-output>
+                          <template-output>
+                            system_dynamics
+                          </template-output>
+                        </step>
+                        <step n="4" goal="Analyze forces and constraints">
+                          Understand what's driving toward and resisting solution.
     
     Apply **Force Field Analysis**:
     
@@ -1631,24 +1636,24 @@
     - What constraints are real vs assumed?
     
     Synthesize key insights from analysis.
-                        <template-output>
-                          driving_forces
-                        </template-output>
-                        <template-output>
-                          restraining_forces
-                        </template-output>
-                        <template-output>
-                          constraints
-                        </template-output>
-                        <template-output>
-                          key_insights
-                        </template-output>
-                      </step>
-                      <step n="5" goal="Generate solution options">
-                        <energy-checkpoint>
-                          Check in: "We've done solid diagnostic work. How's your energy? Ready to shift into solution generation, or want a quick break?"
-                        </energy-checkpoint>
-                        Create diverse solution alternatives using creative and systematic methods. Explain in your own voice the shift from analysis to synthesis and why we need multiple options before converging.
+                          <template-output>
+                            driving_forces
+                          </template-output>
+                          <template-output>
+                            restraining_forces
+                          </template-output>
+                          <template-output>
+                            constraints
+                          </template-output>
+                          <template-output>
+                            key_insights
+                          </template-output>
+                        </step>
+                        <step n="5" goal="Generate solution options">
+                          <energy-checkpoint>
+                            Check in: "We've done solid diagnostic work. How's your energy? Ready to shift into solution generation, or want a quick break?"
+                          </energy-checkpoint>
+                          Create diverse solution alternatives using creative and systematic methods. Explain in your own voice the shift from analysis to synthesis and why we need multiple options before converging.
     
     Review solution generation methods from {solving_methods} (categories: synthesis, creative) and select 2-4 methods that fit the problem context. Consider:
     
@@ -1667,18 +1672,18 @@
     - 10-15 solution ideas minimum
     - Mix of incremental and breakthrough approaches
     - Include "wild" ideas that challenge assumptions
-                        <template-output>
-                          solution_methods
-                        </template-output>
-                        <template-output>
-                          generated_solutions
-                        </template-output>
-                        <template-output>
-                          creative_alternatives
-                        </template-output>
-                      </step>
-                      <step n="6" goal="Evaluate and select solution">
-                        Systematically evaluate options to select optimal approach. Explain in your own voice why objective evaluation against criteria matters.
+                          <template-output>
+                            solution_methods
+                          </template-output>
+                          <template-output>
+                            generated_solutions
+                          </template-output>
+                          <template-output>
+                            creative_alternatives
+                          </template-output>
+                        </step>
+                        <step n="6" goal="Evaluate and select solution">
+                          Systematically evaluate options to select optimal approach. Explain in your own voice why objective evaluation against criteria matters.
     
     Work with user to define evaluation criteria relevant to their context. Common criteria:
     
@@ -1701,21 +1706,21 @@
     - What makes you confident?
     - What concerns remain?
     - What assumptions are you making?
-                        <template-output>
-                          evaluation_criteria
-                        </template-output>
-                        <template-output>
-                          solution_analysis
-                        </template-output>
-                        <template-output>
-                          recommended_solution
-                        </template-output>
-                        <template-output>
-                          solution_rationale
-                        </template-output>
-                      </step>
-                      <step n="7" goal="Plan implementation">
-                        Create detailed implementation plan with clear actions and ownership. Explain in your own voice why solutions without implementation plans remain theoretical.
+                          <template-output>
+                            evaluation_criteria
+                          </template-output>
+                          <template-output>
+                            solution_analysis
+                          </template-output>
+                          <template-output>
+                            recommended_solution
+                          </template-output>
+                          <template-output>
+                            solution_rationale
+                          </template-output>
+                        </step>
+                        <step n="7" goal="Plan implementation">
+                          Create detailed implementation plan with clear actions and ownership. Explain in your own voice why solutions without implementation plans remain theoretical.
     
     Define implementation approach:
     
@@ -1736,27 +1741,27 @@
     - How will we Plan, Do, Check, Act iteratively?
     - What milestones mark progress?
     - When do we check and adjust?
-                        <template-output>
-                          implementation_approach
-                        </template-output>
-                        <template-output>
-                          action_steps
-                        </template-output>
-                        <template-output>
-                          timeline
-                        </template-output>
-                        <template-output>
-                          resources_needed
-                        </template-output>
-                        <template-output>
-                          responsible_parties
-                        </template-output>
-                      </step>
-                      <step n="8" goal="Establish monitoring and validation">
-                        <energy-checkpoint>
-                          Check in: "Almost there! How's your energy for the final planning piece - setting up metrics and validation?"
-                        </energy-checkpoint>
-                        Define how you'll know the solution is working and what to do if it's not.
+                          <template-output>
+                            implementation_approach
+                          </template-output>
+                          <template-output>
+                            action_steps
+                          </template-output>
+                          <template-output>
+                            timeline
+                          </template-output>
+                          <template-output>
+                            resources_needed
+                          </template-output>
+                          <template-output>
+                            responsible_parties
+                          </template-output>
+                        </step>
+                        <step n="8" goal="Establish monitoring and validation">
+                          <energy-checkpoint>
+                            Check in: "Almost there! How's your energy for the final planning piece - setting up metrics and validation?"
+                          </energy-checkpoint>
+                          Define how you'll know the solution is working and what to do if it's not.
     
     Create monitoring dashboard:
     
@@ -1777,21 +1782,21 @@
     - How will you prevent or detect issues early?
     - What's plan B if this doesn't work?
     - What triggers adjustment or pivot?
-                        <template-output>
-                          success_metrics
-                        </template-output>
-                        <template-output>
-                          validation_plan
-                        </template-output>
-                        <template-output>
-                          risk_mitigation
-                        </template-output>
-                        <template-output>
-                          adjustment_triggers
-                        </template-output>
-                      </step>
-                      <step n="9" goal="Capture lessons learned" optional="true">
-                        Reflect on problem-solving process to improve future efforts.
+                          <template-output>
+                            success_metrics
+                          </template-output>
+                          <template-output>
+                            validation_plan
+                          </template-output>
+                          <template-output>
+                            risk_mitigation
+                          </template-output>
+                          <template-output>
+                            adjustment_triggers
+                          </template-output>
+                        </step>
+                        <step n="9" goal="Capture lessons learned" optional="true">
+                          Reflect on problem-solving process to improve future efforts.
     
     Facilitate reflection:
     
@@ -1800,21 +1805,21 @@
     - What insights surprised you?
     - What patterns or principles emerged?
     - What will you remember for next time?
-                        <template-output>
-                          key_learnings
-                        </template-output>
-                        <template-output>
-                          what_worked
-                        </template-output>
-                        <template-output>
-                          what_to_avoid
-                        </template-output>
-                      </step>
-                    </workflow>
-                    ]]>
-                  </file>
-                  <file id="bmad/cis/workflows/problem-solving/template.md" type="md">
-                    <![CDATA[# Problem Solving Session: {{problem_title}}
+                          <template-output>
+                            key_learnings
+                          </template-output>
+                          <template-output>
+                            what_worked
+                          </template-output>
+                          <template-output>
+                            what_to_avoid
+                          </template-output>
+                        </step>
+                      </workflow>
+                      ]]>
+                    </file>
+                    <file id="bmad/cis/workflows/problem-solving/template.md" type="md">
+                      <![CDATA[# Problem Solving Session: {{problem_title}}
     
     **Date:** {{date}}
     **Problem Solver:** {{user_name}}
@@ -1980,9 +1985,9 @@
     
     _Generated using BMAD Creative Intelligence Suite - Problem Solving Workflow_
     ]]>
-                    </file>
-                    <file id="bmad/cis/workflows/problem-solving/solving-methods.csv" type="csv">
-                      <![CDATA[category,method_name,description,facilitation_prompts
+                      </file>
+                      <file id="bmad/cis/workflows/problem-solving/solving-methods.csv" type="csv">
+                        <![CDATA[category,method_name,description,facilitation_prompts
     diagnosis,Five Whys Root Cause,Drill down through layers of symptoms to uncover true root cause by asking why five times,Why did this happen?|Why is that the case?|Why does that occur?|What's beneath that?|What's the root cause?
     diagnosis,Fishbone Diagram,Map all potential causes across categories - people process materials equipment environment - to systematically explore cause space,What people factors contribute?|What process issues?|What material problems?|What equipment factors?|What environmental conditions?
     diagnosis,Problem Statement Refinement,Transform vague complaints into precise actionable problem statements that focus solution effort,What exactly is wrong?|Who is affected and how?|When and where does it occur?|What's the gap between current and desired?|What makes this a problem?
@@ -2013,11 +2018,11 @@
     creative,Reverse Brainstorming,Flip problem to how to cause or worsen it then reverse insights to find solutions,How could we cause this problem?|How make it worse?|What would guarantee failure?|Now reverse insights|What solutions emerge?
     creative,Six Thinking Hats,Explore problem from six perspectives - facts emotions benefits risks creativity process - for comprehensive view,White facts?|Red feelings?|Yellow benefits?|Black risks?|Green alternatives?|Blue process?
     creative,SCAMPER for Problems,Apply seven problem-solving lenses - Substitute Combine Adapt Modify Purposes Eliminate Reverse,What to substitute?|What to combine?|What to adapt?|What to modify?|Other purposes?|What to eliminate?|What to reverse?]]>
-                      </file>
-                      <file id="bmad/cis/workflows/design-thinking/workflow.yaml" type="yaml">
-                        <![CDATA[name: design-thinking
+                        </file>
+                        <file id="bmad/cis/workflows/design-thinking/workflow.yaml" type="yaml">
+                          <![CDATA[name: design-thinking
     description: >
-                          -
+                            -
       Guide human-centered design processes using empathy-driven methodologies. This
       workflow walks through the design thinking phases - Empathize, Define, Ideate,
       Prototype, and Test - to create solutions deeply rooted in user needs.
@@ -2029,30 +2034,35 @@
       - 'bmad/cis/workflows/design-thinking/template.md'
       - 'bmad/cis/workflows/design-thinking/design-methods.csv'
     ]]>
-                        </file>
-                        <file id="bmad/cis/workflows/design-thinking/instructions.md" type="md">
-                          <![CDATA[# Design Thinking Workflow Instructions
+                          </file>
+                          <file id="bmad/cis/workflows/design-thinking/instructions.md" type="md">
+                            <![CDATA[# Design Thinking Workflow Instructions
     
     <critical>The workflow execution engine is governed by: {project_root}/bmad/core/tasks/workflow.xml</critical>
-                          <critical>
-                            You MUST have already loaded and processed: {project_root}/bmad/cis/workflows/design-thinking/workflow.yaml
-                          </critical>
-                          <critical>Load and understand design methods from: {design_methods}</critical>
-                          <critical>
-                            ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
-                          </critical>
-                          <facilitation-principles>
-                            YOU ARE A HUMAN-CENTERED DESIGN FACILITATOR:
+                            <critical>
+                              You MUST have already loaded and processed: {project_root}/bmad/cis/workflows/design-thinking/workflow.yaml
+                            </critical>
+                            <critical>Load and understand design methods from: {design_methods}</critical>
+                            <critical>
+                              ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
+                            </critical>
+                            <critical>
+                              ⚠️ CHECKPOINT PROTOCOL: After EVERY
+                              <template-output>
+                                tag, you MUST follow workflow.xml substep 2c: SAVE content to file immediately → SHOW checkpoint separator (━━━━━━━━━━━━━━━━━━━━━━━) → DISPLAY generated content → PRESENT options [a]Advanced Elicitation/[c]Continue/[p]Party-Mode/[y]YOLO → WAIT for user response. Never batch saves or skip checkpoints.
+                              </critical>
+                              <facilitation-principles>
+                                YOU ARE A HUMAN-CENTERED DESIGN FACILITATOR:
       - Keep users at the center of every decision
       - Encourage divergent thinking before convergent action
       - Make ideas tangible quickly - prototype beats discussion
       - Embrace failure as feedback, not defeat
       - Test with real users, not assumptions
       - Balance empathy with action momentum
-                          </facilitation-principles>
-                          <workflow>
-                            <step n="1" goal="Gather context and define design challenge">
-                              Ask the user about their design challenge:
+                              </facilitation-principles>
+                              <workflow>
+                                <step n="1" goal="Gather context and define design challenge">
+                                  Ask the user about their design challenge:
     - What problem or opportunity are you exploring?
     - Who are the primary users or stakeholders?
     - What constraints exist (time, budget, technology)?
@@ -2062,15 +2072,15 @@
     Load any context data provided via the data attribute.
     
     Create a clear design challenge statement.
-                              <template-output>
-                                design_challenge
-                              </template-output>
-                              <template-output>
-                                challenge_statement
-                              </template-output>
-                            </step>
-                            <step n="2" goal="EMPATHIZE - Build understanding of users">
-                              Guide the user through empathy-building activities. Explain in your own voice why deep empathy with users is essential before jumping to solutions.
+                                  <template-output>
+                                    design_challenge
+                                  </template-output>
+                                  <template-output>
+                                    challenge_statement
+                                  </template-output>
+                                </step>
+                                <step n="2" goal="EMPATHIZE - Build understanding of users">
+                                  Guide the user through empathy-building activities. Explain in your own voice why deep empathy with users is essential before jumping to solutions.
     
     Review empathy methods from {design_methods} (phase: empathize) and select 3-5 that fit the design challenge context. Consider:
     
@@ -2087,21 +2097,21 @@
     - What pain points emerged?
     - What surprised you?
     - What patterns do you see?
-                              <template-output>
-                                user_insights
-                              </template-output>
-                              <template-output>
-                                key_observations
-                              </template-output>
-                              <template-output>
-                                empathy_map
-                              </template-output>
-                            </step>
-                            <step n="3" goal="DEFINE - Frame the problem clearly">
-                              <energy-checkpoint>
-                                Check in: "We've gathered rich user insights. How are you feeling? Ready to synthesize into problem statements?"
-                              </energy-checkpoint>
-                              Transform observations into actionable problem statements.
+                                  <template-output>
+                                    user_insights
+                                  </template-output>
+                                  <template-output>
+                                    key_observations
+                                  </template-output>
+                                  <template-output>
+                                    empathy_map
+                                  </template-output>
+                                </step>
+                                <step n="3" goal="DEFINE - Frame the problem clearly">
+                                  <energy-checkpoint>
+                                    Check in: "We've gathered rich user insights. How are you feeling? Ready to synthesize into problem statements?"
+                                  </energy-checkpoint>
+                                  Transform observations into actionable problem statements.
     
     Guide through problem framing (phase: define methods):
     
@@ -2115,18 +2125,18 @@
     - Why does this matter to users?
     - What would success look like for them?
     - What assumptions are we making?
-                              <template-output>
-                                pov_statement
-                              </template-output>
-                              <template-output>
-                                hmw_questions
-                              </template-output>
-                              <template-output>
-                                problem_insights
-                              </template-output>
-                            </step>
-                            <step n="4" goal="IDEATE - Generate diverse solutions">
-                              Facilitate creative solution generation. Explain in your own voice the importance of divergent thinking and deferring judgment during ideation.
+                                  <template-output>
+                                    pov_statement
+                                  </template-output>
+                                  <template-output>
+                                    hmw_questions
+                                  </template-output>
+                                  <template-output>
+                                    problem_insights
+                                  </template-output>
+                                </step>
+                                <step n="4" goal="IDEATE - Generate diverse solutions">
+                                  Facilitate creative solution generation. Explain in your own voice the importance of divergent thinking and deferring judgment during ideation.
     
     Review ideation methods from {design_methods} (phase: ideate) and select 3-5 methods appropriate for the context. Consider:
     
@@ -2150,21 +2160,21 @@
     - Which address the core user need?
     - Which are feasible given constraints?
     - Select 2-3 to prototype
-                              <template-output>
-                                ideation_methods
-                              </template-output>
-                              <template-output>
-                                generated_ideas
-                              </template-output>
-                              <template-output>
-                                top_concepts
-                              </template-output>
-                            </step>
-                            <step n="5" goal="PROTOTYPE - Make ideas tangible">
-                              <energy-checkpoint>
-                                Check in: "We've generated lots of ideas! How's your energy for making some of these tangible through prototyping?"
-                              </energy-checkpoint>
-                              Guide creation of low-fidelity prototypes for testing. Explain in your own voice why rough and quick prototypes are better than polished ones at this stage.
+                                  <template-output>
+                                    ideation_methods
+                                  </template-output>
+                                  <template-output>
+                                    generated_ideas
+                                  </template-output>
+                                  <template-output>
+                                    top_concepts
+                                  </template-output>
+                                </step>
+                                <step n="5" goal="PROTOTYPE - Make ideas tangible">
+                                  <energy-checkpoint>
+                                    Check in: "We've generated lots of ideas! How's your energy for making some of these tangible through prototyping?"
+                                  </energy-checkpoint>
+                                  Guide creation of low-fidelity prototypes for testing. Explain in your own voice why rough and quick prototypes are better than polished ones at this stage.
     
     Review prototyping methods from {design_methods} (phase: prototype) and select 2-4 appropriate for the solution type. Consider:
     
@@ -2181,18 +2191,18 @@
     - What are you trying to learn?
     - What should users be able to do?
     - What can you fake vs build?
-                              <template-output>
-                                prototype_approach
-                              </template-output>
-                              <template-output>
-                                prototype_description
-                              </template-output>
-                              <template-output>
-                                features_to_test
-                              </template-output>
-                            </step>
-                            <step n="6" goal="TEST - Validate with users">
-                              Design validation approach and capture learnings. Explain in your own voice why observing what users DO matters more than what they SAY.
+                                  <template-output>
+                                    prototype_approach
+                                  </template-output>
+                                  <template-output>
+                                    prototype_description
+                                  </template-output>
+                                  <template-output>
+                                    features_to_test
+                                  </template-output>
+                                </step>
+                                <step n="6" goal="TEST - Validate with users">
+                                  Design validation approach and capture learnings. Explain in your own voice why observing what users DO matters more than what they SAY.
     
     Help plan testing (phase: test methods):
     
@@ -2215,21 +2225,21 @@
     - What needs to change?
     - What should stay?
     - What new insights emerged?
-                              <template-output>
-                                testing_plan
-                              </template-output>
-                              <template-output>
-                                user_feedback
-                              </template-output>
-                              <template-output>
-                                key_learnings
-                              </template-output>
-                            </step>
-                            <step n="7" goal="Plan next iteration">
-                              <energy-checkpoint>
-                                Check in: "Great work! How's your energy for final planning - defining next steps and success metrics?"
-                              </energy-checkpoint>
-                              Define clear next steps and success criteria.
+                                  <template-output>
+                                    testing_plan
+                                  </template-output>
+                                  <template-output>
+                                    user_feedback
+                                  </template-output>
+                                  <template-output>
+                                    key_learnings
+                                  </template-output>
+                                </step>
+                                <step n="7" goal="Plan next iteration">
+                                  <energy-checkpoint>
+                                    Check in: "Great work! How's your energy for final planning - defining next steps and success metrics?"
+                                  </energy-checkpoint>
+                                  Define clear next steps and success criteria.
     
     Based on testing insights:
     
@@ -2245,21 +2255,21 @@
     - Should you reframe the problem?
     - Ready to refine prototype?
     - Time to pilot with real users?
-                              <template-output>
-                                refinements
-                              </template-output>
-                              <template-output>
-                                action_items
-                              </template-output>
-                              <template-output>
-                                success_metrics
-                              </template-output>
-                            </step>
-                          </workflow>
-                          ]]>
-                        </file>
-                        <file id="bmad/cis/workflows/design-thinking/template.md" type="md">
-                          <![CDATA[# Design Thinking Session: {{project_name}}
+                                  <template-output>
+                                    refinements
+                                  </template-output>
+                                  <template-output>
+                                    action_items
+                                  </template-output>
+                                  <template-output>
+                                    success_metrics
+                                  </template-output>
+                                </step>
+                              </workflow>
+                              ]]>
+                            </file>
+                            <file id="bmad/cis/workflows/design-thinking/template.md" type="md">
+                              <![CDATA[# Design Thinking Session: {{project_name}}
     
     **Date:** {{date}}
     **Facilitator:** {{user_name}}
@@ -2371,9 +2381,9 @@
     
     _Generated using BMAD Creative Intelligence Suite - Design Thinking Workflow_
     ]]>
-                          </file>
-                          <file id="bmad/cis/workflows/design-thinking/design-methods.csv" type="csv">
-                            <![CDATA[phase,method_name,description,facilitation_prompts
+                              </file>
+                              <file id="bmad/cis/workflows/design-thinking/design-methods.csv" type="csv">
+                                <![CDATA[phase,method_name,description,facilitation_prompts
     empathize,User Interviews,Conduct deep conversations to understand user needs experiences and pain points through active listening,What brings you here today?|Walk me through a recent experience|What frustrates you most?|What would make this easier?|Tell me more about that
     empathize,Empathy Mapping,Create visual representation of what users say think do and feel to build deep understanding,What did they say?|What might they be thinking?|What actions did they take?|What emotions surfaced?
     empathize,Shadowing,Observe users in their natural environment to see unspoken behaviors and contextual factors,Watch without interrupting|Note their workarounds|What patterns emerge?|What do they not say?
@@ -2404,11 +2414,11 @@
     implement,Design System Creation,Build consistent patterns components and guidelines for scalable implementation,What patterns repeat?|Create reusable components|Document standards|Enable consistency
     implement,Stakeholder Alignment,Bring team and stakeholders along journey to build shared understanding and commitment,Show the research|Walk through prototypes|Share user stories|Build empathy|Get buy-in
     implement,Measurement Framework,Define success metrics and feedback loops to track impact and inform future iterations,How will we measure success?|What are key metrics?|How do we gather feedback?|When do we revisit?]]>
-                            </file>
-                            <file id="bmad/cis/workflows/innovation-strategy/workflow.yaml" type="yaml">
-                              <![CDATA[name: innovation-strategy
+                                </file>
+                                <file id="bmad/cis/workflows/innovation-strategy/workflow.yaml" type="yaml">
+                                  <![CDATA[name: innovation-strategy
     description: >
-                                -
+                                    -
       Identify disruption opportunities and architect business model innovation.
       This workflow guides strategic analysis of markets, competitive dynamics, and
       business model innovation to uncover sustainable competitive advantages and
@@ -2421,30 +2431,35 @@
       - 'bmad/cis/workflows/innovation-strategy/template.md'
       - 'bmad/cis/workflows/innovation-strategy/innovation-frameworks.csv'
     ]]>
-                              </file>
-                              <file id="bmad/cis/workflows/innovation-strategy/instructions.md" type="md">
-                                <![CDATA[# Innovation Strategy Workflow Instructions
+                                  </file>
+                                  <file id="bmad/cis/workflows/innovation-strategy/instructions.md" type="md">
+                                    <![CDATA[# Innovation Strategy Workflow Instructions
     
     <critical>The workflow execution engine is governed by: {project_root}/bmad/core/tasks/workflow.xml</critical>
-                                <critical>
-                                  You MUST have already loaded and processed: {project_root}/bmad/cis/workflows/innovation-strategy/workflow.yaml
-                                </critical>
-                                <critical>Load and understand innovation frameworks from: {innovation_frameworks}</critical>
-                                <critical>
-                                  ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
-                                </critical>
-                                <facilitation-principles>
-                                  YOU ARE A STRATEGIC INNOVATION ADVISOR:
+                                    <critical>
+                                      You MUST have already loaded and processed: {project_root}/bmad/cis/workflows/innovation-strategy/workflow.yaml
+                                    </critical>
+                                    <critical>Load and understand innovation frameworks from: {innovation_frameworks}</critical>
+                                    <critical>
+                                      ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
+                                    </critical>
+                                    <critical>
+                                      ⚠️ CHECKPOINT PROTOCOL: After EVERY
+                                      <template-output>
+                                        tag, you MUST follow workflow.xml substep 2c: SAVE content to file immediately → SHOW checkpoint separator (━━━━━━━━━━━━━━━━━━━━━━━) → DISPLAY generated content → PRESENT options [a]Advanced Elicitation/[c]Continue/[p]Party-Mode/[y]YOLO → WAIT for user response. Never batch saves or skip checkpoints.
+                                      </critical>
+                                      <facilitation-principles>
+                                        YOU ARE A STRATEGIC INNOVATION ADVISOR:
       - Demand brutal truth about market realities before innovation exploration
       - Challenge assumptions ruthlessly - comfortable illusions kill strategies
       - Balance bold vision with pragmatic execution
       - Focus on sustainable competitive advantage, not clever features
       - Push for evidence-based decisions over hopeful guesses
       - Celebrate strategic clarity when achieved
-                                </facilitation-principles>
-                                <workflow>
-                                  <step n="1" goal="Establish strategic context">
-                                    Understand the strategic situation and objectives:
+                                      </facilitation-principles>
+                                      <workflow>
+                                        <step n="1" goal="Establish strategic context">
+                                          Understand the strategic situation and objectives:
     
     Ask the user:
     
@@ -2457,21 +2472,21 @@
     Load any context data provided via the data attribute.
     
     Synthesize into clear strategic framing.
-                                    <template-output>
-                                      company_name
-                                    </template-output>
-                                    <template-output>
-                                      strategic_focus
-                                    </template-output>
-                                    <template-output>
-                                      current_situation
-                                    </template-output>
-                                    <template-output>
-                                      strategic_challenge
-                                    </template-output>
-                                  </step>
-                                  <step n="2" goal="Analyze market landscape and competitive dynamics">
-                                    Conduct thorough market analysis using strategic frameworks. Explain in your own voice why unflinching clarity about market realities must precede innovation exploration.
+                                          <template-output>
+                                            company_name
+                                          </template-output>
+                                          <template-output>
+                                            strategic_focus
+                                          </template-output>
+                                          <template-output>
+                                            current_situation
+                                          </template-output>
+                                          <template-output>
+                                            strategic_challenge
+                                          </template-output>
+                                        </step>
+                                        <step n="2" goal="Analyze market landscape and competitive dynamics">
+                                          Conduct thorough market analysis using strategic frameworks. Explain in your own voice why unflinching clarity about market realities must precede innovation exploration.
     
     Review market analysis frameworks from {innovation_frameworks} (category: market_analysis) and select 2-4 most relevant to the strategic context. Consider:
     
@@ -2494,24 +2509,24 @@
     - What substitutes threaten your value proposition?
     - What's changing in the market that creates opportunity or threat?
     - Where are customers underserved or overserved?
-                                    <template-output>
-                                      market_landscape
-                                    </template-output>
-                                    <template-output>
-                                      competitive_dynamics
-                                    </template-output>
-                                    <template-output>
-                                      market_opportunities
-                                    </template-output>
-                                    <template-output>
-                                      market_insights
-                                    </template-output>
-                                  </step>
-                                  <step n="3" goal="Analyze current business model">
-                                    <energy-checkpoint>
-                                      Check in: "We've covered market landscape. How's your energy? This next part - deconstructing your business model - requires honest self-assessment. Ready?"
-                                    </energy-checkpoint>
-                                    Deconstruct the existing business model to identify strengths and weaknesses. Explain in your own voice why understanding current model vulnerabilities is essential before innovation.
+                                          <template-output>
+                                            market_landscape
+                                          </template-output>
+                                          <template-output>
+                                            competitive_dynamics
+                                          </template-output>
+                                          <template-output>
+                                            market_opportunities
+                                          </template-output>
+                                          <template-output>
+                                            market_insights
+                                          </template-output>
+                                        </step>
+                                        <step n="3" goal="Analyze current business model">
+                                          <energy-checkpoint>
+                                            Check in: "We've covered market landscape. How's your energy? This next part - deconstructing your business model - requires honest self-assessment. Ready?"
+                                          </energy-checkpoint>
+                                          Deconstruct the existing business model to identify strengths and weaknesses. Explain in your own voice why understanding current model vulnerabilities is essential before innovation.
     
     Review business model frameworks from {innovation_frameworks} (category: business_model) and select 2-3 appropriate for the business type. Consider:
     
@@ -2533,21 +2548,21 @@
     - What's your defensible competitive advantage (be honest)?
     - Where is your model vulnerable to disruption?
     - What assumptions underpin your model that might be wrong?
-                                    <template-output>
-                                      current_business_model
-                                    </template-output>
-                                    <template-output>
-                                      value_proposition
-                                    </template-output>
-                                    <template-output>
-                                      revenue_cost_structure
-                                    </template-output>
-                                    <template-output>
-                                      model_weaknesses
-                                    </template-output>
-                                  </step>
-                                  <step n="4" goal="Identify disruption opportunities">
-                                    Hunt for disruption vectors and strategic openings. Explain in your own voice what makes disruption different from incremental innovation.
+                                          <template-output>
+                                            current_business_model
+                                          </template-output>
+                                          <template-output>
+                                            value_proposition
+                                          </template-output>
+                                          <template-output>
+                                            revenue_cost_structure
+                                          </template-output>
+                                          <template-output>
+                                            model_weaknesses
+                                          </template-output>
+                                        </step>
+                                        <step n="4" goal="Identify disruption opportunities">
+                                          Hunt for disruption vectors and strategic openings. Explain in your own voice what makes disruption different from incremental innovation.
     
     Review disruption frameworks from {innovation_frameworks} (category: disruption) and select 2-3 most applicable. Consider:
     
@@ -2569,24 +2584,24 @@
     - What would be "good enough" for a new segment?
     - What technology enablers create sudden strategic openings?
     - Where could you make the competition irrelevant?
-                                    <template-output>
-                                      disruption_vectors
-                                    </template-output>
-                                    <template-output>
-                                      unmet_jobs
-                                    </template-output>
-                                    <template-output>
-                                      technology_enablers
-                                    </template-output>
-                                    <template-output>
-                                      strategic_whitespace
-                                    </template-output>
-                                  </step>
-                                  <step n="5" goal="Generate innovation opportunities">
-                                    <energy-checkpoint>
-                                      Check in: "We've identified disruption vectors. How are you feeling? Ready to generate concrete innovation opportunities?"
-                                    </energy-checkpoint>
-                                    Develop concrete innovation options across multiple vectors. Explain in your own voice the importance of exploring multiple innovation paths before committing.
+                                          <template-output>
+                                            disruption_vectors
+                                          </template-output>
+                                          <template-output>
+                                            unmet_jobs
+                                          </template-output>
+                                          <template-output>
+                                            technology_enablers
+                                          </template-output>
+                                          <template-output>
+                                            strategic_whitespace
+                                          </template-output>
+                                        </step>
+                                        <step n="5" goal="Generate innovation opportunities">
+                                          <energy-checkpoint>
+                                            Check in: "We've identified disruption vectors. How are you feeling? Ready to generate concrete innovation opportunities?"
+                                          </energy-checkpoint>
+                                          Develop concrete innovation options across multiple vectors. Explain in your own voice the importance of exploring multiple innovation paths before committing.
     
     Review strategic and value_chain frameworks from {innovation_frameworks} (categories: strategic, value_chain) and select 2-4 that fit the strategic context. Consider:
     
@@ -2607,21 +2622,21 @@
     - Value chain innovations (what activities you own)
     - Partnership and ecosystem opportunities
     - Technology-enabled transformations
-                                    <template-output>
-                                      innovation_initiatives
-                                    </template-output>
-                                    <template-output>
-                                      business_model_innovation
-                                    </template-output>
-                                    <template-output>
-                                      value_chain_opportunities
-                                    </template-output>
-                                    <template-output>
-                                      partnership_opportunities
-                                    </template-output>
-                                  </step>
-                                  <step n="6" goal="Develop and evaluate strategic options">
-                                    Synthesize insights into 3 distinct strategic options.
+                                          <template-output>
+                                            innovation_initiatives
+                                          </template-output>
+                                          <template-output>
+                                            business_model_innovation
+                                          </template-output>
+                                          <template-output>
+                                            value_chain_opportunities
+                                          </template-output>
+                                          <template-output>
+                                            partnership_opportunities
+                                          </template-output>
+                                        </step>
+                                        <step n="6" goal="Develop and evaluate strategic options">
+                                          Synthesize insights into 3 distinct strategic options.
     
     For each option:
     
@@ -2639,45 +2654,45 @@
     - Competitive defensibility
     - Resource feasibility
     - Risk vs reward profile
-                                    <template-output>
-                                      option_a_name
-                                    </template-output>
-                                    <template-output>
-                                      option_a_description
-                                    </template-output>
-                                    <template-output>
-                                      option_a_pros
-                                    </template-output>
-                                    <template-output>
-                                      option_a_cons
-                                    </template-output>
-                                    <template-output>
-                                      option_b_name
-                                    </template-output>
-                                    <template-output>
-                                      option_b_description
-                                    </template-output>
-                                    <template-output>
-                                      option_b_pros
-                                    </template-output>
-                                    <template-output>
-                                      option_b_cons
-                                    </template-output>
-                                    <template-output>
-                                      option_c_name
-                                    </template-output>
-                                    <template-output>
-                                      option_c_description
-                                    </template-output>
-                                    <template-output>
-                                      option_c_pros
-                                    </template-output>
-                                    <template-output>
-                                      option_c_cons
-                                    </template-output>
-                                  </step>
-                                  <step n="7" goal="Recommend strategic direction">
-                                    Make bold recommendation with clear rationale.
+                                          <template-output>
+                                            option_a_name
+                                          </template-output>
+                                          <template-output>
+                                            option_a_description
+                                          </template-output>
+                                          <template-output>
+                                            option_a_pros
+                                          </template-output>
+                                          <template-output>
+                                            option_a_cons
+                                          </template-output>
+                                          <template-output>
+                                            option_b_name
+                                          </template-output>
+                                          <template-output>
+                                            option_b_description
+                                          </template-output>
+                                          <template-output>
+                                            option_b_pros
+                                          </template-output>
+                                          <template-output>
+                                            option_b_cons
+                                          </template-output>
+                                          <template-output>
+                                            option_c_name
+                                          </template-output>
+                                          <template-output>
+                                            option_c_description
+                                          </template-output>
+                                          <template-output>
+                                            option_c_pros
+                                          </template-output>
+                                          <template-output>
+                                            option_c_cons
+                                          </template-output>
+                                        </step>
+                                        <step n="7" goal="Recommend strategic direction">
+                                          Make bold recommendation with clear rationale.
     
     Synthesize into recommended strategy:
     
@@ -2693,21 +2708,21 @@
     - What partnerships are essential?
     - What market conditions must hold?
     - What execution excellence is required?
-                                    <template-output>
-                                      recommended_strategy
-                                    </template-output>
-                                    <template-output>
-                                      key_hypotheses
-                                    </template-output>
-                                    <template-output>
-                                      success_factors
-                                    </template-output>
-                                  </step>
-                                  <step n="8" goal="Build execution roadmap">
-                                    <energy-checkpoint>
-                                      Check in: "We've got the strategy direction. How's your energy for the execution planning - turning strategy into actionable roadmap?"
-                                    </energy-checkpoint>
-                                    Create phased roadmap with clear milestones.
+                                          <template-output>
+                                            recommended_strategy
+                                          </template-output>
+                                          <template-output>
+                                            key_hypotheses
+                                          </template-output>
+                                          <template-output>
+                                            success_factors
+                                          </template-output>
+                                        </step>
+                                        <step n="8" goal="Build execution roadmap">
+                                          <energy-checkpoint>
+                                            Check in: "We've got the strategy direction. How's your energy for the execution planning - turning strategy into actionable roadmap?"
+                                          </energy-checkpoint>
+                                          Create phased roadmap with clear milestones.
     
     Structure in three phases:
     
@@ -2721,18 +2736,18 @@
     - Resource requirements
     - Success metrics
     - Decision gates
-                                    <template-output>
-                                      phase_1
-                                    </template-output>
-                                    <template-output>
-                                      phase_2
-                                    </template-output>
-                                    <template-output>
-                                      phase_3
-                                    </template-output>
-                                  </step>
-                                  <step n="9" goal="Define metrics and risk mitigation">
-                                    Establish measurement framework and risk management.
+                                          <template-output>
+                                            phase_1
+                                          </template-output>
+                                          <template-output>
+                                            phase_2
+                                          </template-output>
+                                          <template-output>
+                                            phase_3
+                                          </template-output>
+                                        </step>
+                                        <step n="9" goal="Define metrics and risk mitigation">
+                                          Establish measurement framework and risk management.
     
     Define success metrics:
     
@@ -2747,27 +2762,27 @@
     - What competitive responses could occur?
     - How do we de-risk systematically?
     - What's our backup plan?
-                                    <template-output>
-                                      leading_indicators
-                                    </template-output>
-                                    <template-output>
-                                      lagging_indicators
-                                    </template-output>
-                                    <template-output>
-                                      decision_gates
-                                    </template-output>
-                                    <template-output>
-                                      key_risks
-                                    </template-output>
-                                    <template-output>
-                                      risk_mitigation
-                                    </template-output>
-                                  </step>
-                                </workflow>
-                                ]]>
-                              </file>
-                              <file id="bmad/cis/workflows/innovation-strategy/template.md" type="md">
-                                <![CDATA[# Innovation Strategy: {{company_name}}
+                                          <template-output>
+                                            leading_indicators
+                                          </template-output>
+                                          <template-output>
+                                            lagging_indicators
+                                          </template-output>
+                                          <template-output>
+                                            decision_gates
+                                          </template-output>
+                                          <template-output>
+                                            key_risks
+                                          </template-output>
+                                          <template-output>
+                                            risk_mitigation
+                                          </template-output>
+                                        </step>
+                                      </workflow>
+                                      ]]>
+                                    </file>
+                                    <file id="bmad/cis/workflows/innovation-strategy/template.md" type="md">
+                                      <![CDATA[# Innovation Strategy: {{company_name}}
     
     **Date:** {{date}}
     **Strategist:** {{user_name}}
@@ -2957,9 +2972,9 @@
     
     _Generated using BMAD Creative Intelligence Suite - Innovation Strategy Workflow_
     ]]>
-                                </file>
-                                <file id="bmad/cis/workflows/innovation-strategy/innovation-frameworks.csv" type="csv">
-                                  <![CDATA[category,framework_name,description,key_questions
+                                      </file>
+                                      <file id="bmad/cis/workflows/innovation-strategy/innovation-frameworks.csv" type="csv">
+                                        <![CDATA[category,framework_name,description,key_questions
     disruption,Disruptive Innovation Theory,Identify how new entrants use simpler cheaper solutions to overtake incumbents by serving overlooked segments,Who are non-consumers?|What's good enough for them?|What incumbent weakness exists?|How could simple beat sophisticated?|What market entry point exists?
     disruption,Jobs to be Done,Uncover customer jobs and the solutions they hire to make progress - reveals unmet needs competitors miss,What job are customers hiring this for?|What progress do they seek?|What alternatives do they use?|What frustrations exist?|What would fire this solution?
     disruption,Blue Ocean Strategy,Create uncontested market space by making competition irrelevant through value innovation,What factors can we eliminate?|What should we reduce?|What can we raise?|What should we create?|Where is the blue ocean?
@@ -2990,6 +3005,6 @@
     technology,Technology Roadmapping,Plan evolution of technology capabilities aligned with strategic goals and market timing,What capabilities do we need?|What's the sequence?|What dependencies exist?|What's the timeline?|Where do we invest first?
     technology,Open Innovation Strategy,Leverage external ideas technologies and paths to market to accelerate innovation beyond internal R and D,What could we source externally?|Who has relevant innovation?|How do we collaborate?|What IP strategy?|How do we integrate external innovation?
     technology,Digital Transformation Framework,Reimagine business models operations and customer experiences through digital technology enablers,What digital capabilities exist?|How could they transform our model?|What customer experience improvements?|What operational efficiencies?|What new business models?]]>
-                                  </file>
-                                </dependencies>
-                              </team-bundle>
+                                        </file>
+                                      </dependencies>
+                                    </team-bundle>

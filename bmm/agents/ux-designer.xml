@@ -775,57 +775,62 @@
           <critical>
             ⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.
           </critical>
-          <step n="0" goal="Validate workflow readiness" tag="workflow-status">
-            <action>Check if {output_folder}/bmm-workflow-status.yaml exists</action>
-            <check if="status file not found">
-              <output>
-                No workflow status file found. Create UX Design can run standalone or as part of BMM planning workflow.
-              </output>
-              <output>
-                For standalone use, we'll gather requirements as we go. For integrated use, run `workflow-init` first for better context.
-              </output>
-              <action>Set standalone_mode = true</action>
-            </check>
-            <check if="status file found">
-              <action>Load the FULL file: {output_folder}/bmm-workflow-status.yaml</action>
-              <action>Parse workflow_status section</action>
-              <action>Check status of "create-design" workflow</action>
-              <action>Get project_level from YAML metadata</action>
-              <action>Find first non-completed workflow (next expected workflow)</action>
-              <check if="create-design status is file path (already completed)">
-                <output>⚠️ UX Design already completed: {{create-design status}}</output>
-                <ask>Re-running will overwrite the existing UX design. Continue? (y/n)</ask>
-                <check if="n">
-                  <output>Exiting. Use workflow-status to see your next step.</output>
-                  <action>Exit workflow</action>
-                </check>
+          <critical>
+            ⚠️ CHECKPOINT PROTOCOL: After EVERY
+            <template-output>
+              tag, you MUST follow workflow.xml substep 2c: SAVE content to file immediately → SHOW checkpoint separator (━━━━━━━━━━━━━━━━━━━━━━━) → DISPLAY generated content → PRESENT options [a]Advanced Elicitation/[c]Continue/[p]Party-Mode/[y]YOLO → WAIT for user response. Never batch saves or skip checkpoints.
+            </critical>
+            <step n="0" goal="Validate workflow readiness" tag="workflow-status">
+              <action>Check if {output_folder}/bmm-workflow-status.yaml exists</action>
+              <check if="status file not found">
+                <output>
+                  No workflow status file found. Create UX Design can run standalone or as part of BMM planning workflow.
+                </output>
+                <output>
+                  For standalone use, we'll gather requirements as we go. For integrated use, run `workflow-init` first for better context.
+                </output>
+                <action>Set standalone_mode = true</action>
               </check>
-              <check if="create-design is not the next expected workflow">
-                <output>⚠️ Next expected workflow: {{next_workflow}}. UX Design is out of sequence.</output>
-                <ask>Continue with UX Design anyway? (y/n)</ask>
-                <check if="n">
-                  <output>Exiting. Run {{next_workflow}} instead.</output>
-                  <action>Exit workflow</action>
+              <check if="status file found">
+                <action>Load the FULL file: {output_folder}/bmm-workflow-status.yaml</action>
+                <action>Parse workflow_status section</action>
+                <action>Check status of "create-design" workflow</action>
+                <action>Get project_level from YAML metadata</action>
+                <action>Find first non-completed workflow (next expected workflow)</action>
+                <check if="create-design status is file path (already completed)">
+                  <output>⚠️ UX Design already completed: {{create-design status}}</output>
+                  <ask>Re-running will overwrite the existing UX design. Continue? (y/n)</ask>
+                  <check if="n">
+                    <output>Exiting. Use workflow-status to see your next step.</output>
+                    <action>Exit workflow</action>
+                  </check>
                 </check>
+                <check if="create-design is not the next expected workflow">
+                  <output>⚠️ Next expected workflow: {{next_workflow}}. UX Design is out of sequence.</output>
+                  <ask>Continue with UX Design anyway? (y/n)</ask>
+                  <check if="n">
+                    <output>Exiting. Run {{next_workflow}} instead.</output>
+                    <action>Exit workflow</action>
+                  </check>
+                </check>
+                <action>Set standalone_mode = false</action>
+                <action>Store {{project_level}} for scoping decisions</action>
               </check>
-              <action>Set standalone_mode = false</action>
-              <action>Store {{project_level}} for scoping decisions</action>
-            </check>
-          </step>
-          <step n="0.5" goal="Discover and load input documents">
-            <invoke-protocol name="discover_inputs" />
-            <note>
-              After discovery, these content variables are available: {prd_content}, {product_brief_content}, {epics_content}, {brainstorming_content}, {document_project_content}
-            </note>
-          </step>
-          <step n="1a" goal="Confirm project understanding or gather basic context">
-            <critical>A UX designer must understand the WHY before designing the HOW</critical>
-            <action>
-              Review loaded context from Step 0.5: {prd_content}, {product_brief_content}, {epics_content}, {brainstorming_content}
-            </action>
-            <check if="documents_found">
+            </step>
+            <step n="0.5" goal="Discover and load input documents">
+              <invoke-protocol name="discover_inputs" />
+              <note>
+                After discovery, these content variables are available: {prd_content}, {product_brief_content}, {epics_content}, {brainstorming_content}, {document_project_content}
+              </note>
+            </step>
+            <step n="1a" goal="Confirm project understanding or gather basic context">
+              <critical>A UX designer must understand the WHY before designing the HOW</critical>
               <action>
-                Extract and understand:
+                Review loaded context from Step 0.5: {prd_content}, {product_brief_content}, {epics_content}, {brainstorming_content}
+              </action>
+              <check if="documents_found">
+                <action>
+                  Extract and understand:
         - Project vision and goals
         - Target users and personas
         - Core features and user journeys
@@ -833,32 +838,32 @@
         - Any technical constraints mentioned
         - Brand personality hints
         - Competitive landscape references
-              </action>
-              <output>
-                I've loaded your project documentation. Let me confirm what I'm seeing:
+                </action>
+                <output>
+                  I've loaded your project documentation. Let me confirm what I'm seeing:
   
   **Project:** {{project_summary_from_docs}}
   **Target Users:** {{user_summary_from_docs}}
-              </output>
-              <ask>Does this match your understanding? Any corrections or additions?</ask>
-            </check>
-            <check if="no_documents_found">
-              <ask>
-                Let's start by understanding what you're building.
+                </output>
+                <ask>Does this match your understanding? Any corrections or additions?</ask>
+              </check>
+              <check if="no_documents_found">
+                <ask>
+                  Let's start by understanding what you're building.
   
   **What are you building?** (1-2 sentences about the project)
   
   **Who is this for?** Describe your ideal user.
-              </ask>
-            </check>
-            <template-output>
-              project_and_users_confirmed
-            </template-output>
-          </step>
-          <step n="1b" goal="Understand core experience and platform">
-            <critical>Now we discover the ONE thing that defines this experience</critical>
-            <ask>
-              Now let's dig into the experience itself.
+                </ask>
+              </check>
+              <template-output>
+                project_and_users_confirmed
+              </template-output>
+            </step>
+            <step n="1b" goal="Understand core experience and platform">
+              <critical>Now we discover the ONE thing that defines this experience</critical>
+              <ask>
+                Now let's dig into the experience itself.
   
   **What's the core experience?**
   
@@ -868,15 +873,15 @@
   
   **Platform:**
   Where will users experience this? (Web, mobile app, desktop, multiple platforms)
-            </ask>
-            <template-output>
-              core_experience_and_platform
-            </template-output>
-          </step>
-          <step n="1c" goal="Discover the desired emotional response">
-            <critical>Emotion drives behavior - this shapes everything</critical>
-            <ask>
-              This is crucial - **what should users FEEL when using this?**
+              </ask>
+              <template-output>
+                core_experience_and_platform
+              </template-output>
+            </step>
+            <step n="1c" goal="Discover the desired emotional response">
+              <critical>Emotion drives behavior - this shapes everything</critical>
+              <ask>
+                This is crucial - **what should users FEEL when using this?**
   
   Not what they'll do, but what emotion or state they should experience:
   
@@ -889,15 +894,15 @@
   - Something else?
   
   Really think about the emotional response you want. What feeling would make them tell a friend about this?
-            </ask>
-            <template-output>
-              desired_emotional_response
-            </template-output>
-          </step>
-          <step n="1d" goal="Gather inspiration and analyze UX patterns">
-            <critical>Learn from what users already love</critical>
-            <ask>
-              **Inspiration time!**
+              </ask>
+              <template-output>
+                desired_emotional_response
+              </template-output>
+            </step>
+            <step n="1d" goal="Gather inspiration and analyze UX patterns">
+              <critical>Learn from what users already love</critical>
+              <ask>
+                **Inspiration time!**
   
   Name 2-3 apps your users already love and USE regularly.
   
@@ -908,53 +913,53 @@
   - Links to products or demos
   
   For each one, what do they do well from a UX perspective? What makes the experience compelling?
-            </ask>
-            <action>
-              For each app mentioned:
-              <WebSearch>{{app_name}} current interface UX design 2025</WebSearch>
-              <action>Analyze what makes that app's UX effective</action>
-              <action>Note patterns and principles that could apply to this project</action>
-            </action>
-            <action>
-              If screenshots provided:
-              <action>Analyze screenshots for UX patterns, visual style, interaction patterns</action>
-              <action>Note what user finds compelling about these examples</action>
-            </action>
-            <template-output>
-              inspiration_analysis
-            </template-output>
-          </step>
-          <step n="1e" goal="Synthesize understanding and set facilitation mode">
-            <critical>Now analyze complexity and set the right facilitation approach</critical>
-            <action>
-              Analyze project for UX complexity indicators: - Number of distinct user roles or personas - Number of primary user journeys - Interaction complexity (simple CRUD vs rich interactions) - Platform requirements (single vs multi-platform) - Real-time collaboration needs - Content creation vs consumption - Novel interaction patterns
-            </action>
-            <action>
-              Based on {user_skill_level}, set facilitation approach:
-              <check if="{user_skill_level} == 'expert'">
-                Set mode: UX_EXPERT
+              </ask>
+              <action>
+                For each app mentioned:
+                <WebSearch>{{app_name}} current interface UX design 2025</WebSearch>
+                <action>Analyze what makes that app's UX effective</action>
+                <action>Note patterns and principles that could apply to this project</action>
+              </action>
+              <action>
+                If screenshots provided:
+                <action>Analyze screenshots for UX patterns, visual style, interaction patterns</action>
+                <action>Note what user finds compelling about these examples</action>
+              </action>
+              <template-output>
+                inspiration_analysis
+              </template-output>
+            </step>
+            <step n="1e" goal="Synthesize understanding and set facilitation mode">
+              <critical>Now analyze complexity and set the right facilitation approach</critical>
+              <action>
+                Analyze project for UX complexity indicators: - Number of distinct user roles or personas - Number of primary user journeys - Interaction complexity (simple CRUD vs rich interactions) - Platform requirements (single vs multi-platform) - Real-time collaboration needs - Content creation vs consumption - Novel interaction patterns
+              </action>
+              <action>
+                Based on {user_skill_level}, set facilitation approach:
+                <check if="{user_skill_level} == 'expert'">
+                  Set mode: UX_EXPERT
         - Use design terminology freely (affordances, information scent, cognitive load)
         - Move quickly through familiar patterns
         - Focus on nuanced tradeoffs and edge cases
         - Reference design systems and frameworks by name
-              </check>
-              <check if="{user_skill_level} == 'intermediate'">
-                Set mode: UX_INTERMEDIATE
+                </check>
+                <check if="{user_skill_level} == 'intermediate'">
+                  Set mode: UX_INTERMEDIATE
         - Balance design concepts with clear explanations
         - Provide brief context for UX decisions
         - Use familiar analogies when helpful
         - Confirm understanding at key points
-              </check>
-              <check if="{user_skill_level} == 'beginner'">
-                Set mode: UX_BEGINNER
+                </check>
+                <check if="{user_skill_level} == 'beginner'">
+                  Set mode: UX_BEGINNER
         - Explain design concepts in simple terms
         - Use real-world analogies extensively
         - Focus on "why this matters for users"
         - Protect from overwhelming choices
-              </check>
-            </action>
-            <output>
-              Here's what I'm understanding about {{project_name}}:
+                </check>
+              </action>
+              <output>
+                Here's what I'm understanding about {{project_name}}:
   
   **Vision:** {{project_vision_summary}}
   **Users:** {{user_summary}}
@@ -966,18 +971,18 @@
   **UX Complexity:** {{complexity_assessment}}
   
   This helps me understand both what we're building and the experience we're aiming for. Let's start designing!
-            </output>
-            <action>Load UX design template: {template}</action>
-            <action>Initialize output document at {default_output_file}</action>
-            <template-output>
-              project_vision
-            </template-output>
-          </step>
-          <step n="2" goal="Discover and evaluate design systems">
-            <critical>Modern design systems make many good UX decisions by default</critical>
-            <critical>Like starter templates for code, design systems provide proven patterns</critical>
-            <action>
-              Based on platform and tech stack (if known from PRD), identify design system options:
+              </output>
+              <action>Load UX design template: {template}</action>
+              <action>Initialize output document at {default_output_file}</action>
+              <template-output>
+                project_vision
+              </template-output>
+            </step>
+            <step n="2" goal="Discover and evaluate design systems">
+              <critical>Modern design systems make many good UX decisions by default</critical>
+              <critical>Like starter templates for code, design systems provide proven patterns</critical>
+              <action>
+                Based on platform and tech stack (if known from PRD), identify design system options:
   
       For Web Applications:
       - Material UI (Google's design language)
@@ -995,24 +1000,24 @@
       For Desktop:
       - Platform native (macOS, Windows guidelines)
       - Electron with web design system
-            </action>
-            <action>
-              Search for current design system information:
-              <WebSearch>{{platform}} design system 2025 popular options accessibility</WebSearch>
-              <WebSearch>{{identified_design_system}} latest version components features</WebSearch>
-            </action>
-            <check if="design_systems_found">
+              </action>
               <action>
-                For each relevant design system, understand what it provides:
+                Search for current design system information:
+                <WebSearch>{{platform}} design system 2025 popular options accessibility</WebSearch>
+                <WebSearch>{{identified_design_system}} latest version components features</WebSearch>
+              </action>
+              <check if="design_systems_found">
+                <action>
+                  For each relevant design system, understand what it provides:
         - Component library (buttons, forms, modals, etc.)
         - Accessibility built-in (WCAG compliance)
         - Theming capabilities
         - Responsive patterns
         - Icon library
         - Documentation quality
-              </action>
-              <action>
-                Present design system options:
+                </action>
+                <action>
+                  Present design system options:
         "I found {{design_system_count}} design systems that could work well for your project.
   
         Think of design systems like a foundation - they provide proven UI components and patterns,
@@ -1038,36 +1043,36 @@
         **My Recommendation:** {{recommendation}} for {{reason}}
   
         This establishes our component foundation and interaction patterns."
-              </action>
-              <ask>
-                Which design system approach resonates with you?
+                </action>
+                <ask>
+                  Which design system approach resonates with you?
   
   Or tell me:
   
   - Do you need complete visual uniqueness? (→ custom)
   - Want fast development with great defaults? (→ established system)
   - Have brand guidelines to follow? (→ themeable system)
-              </ask>
-              <action>
-                Record design system decision:
+                </ask>
+                <action>
+                  Record design system decision:
           System: {{user_choice}}
           Version: {{verified_version_if_applicable}}
           Rationale: {{user_reasoning_or_recommendation_accepted}}
           Provides: {{components_and_patterns_provided}}
           Customization needs: {{custom_components_needed}}
+                </action>
+              </check>
+              <template-output>
+                design_system_decision
+              </template-output>
+            </step>
+            <step n="3a" goal="Identify the defining experience">
+              <critical>Every great app has a defining experience - identify it first</critical>
+              <action>
+                Based on PRD/brief analysis, identify the core user experience: - What is the primary action users will repeat? - What makes this app unique vs. competitors? - What should be delightfully easy?
               </action>
-            </check>
-            <template-output>
-              design_system_decision
-            </template-output>
-          </step>
-          <step n="3a" goal="Identify the defining experience">
-            <critical>Every great app has a defining experience - identify it first</critical>
-            <action>
-              Based on PRD/brief analysis, identify the core user experience: - What is the primary action users will repeat? - What makes this app unique vs. competitors? - What should be delightfully easy?
-            </action>
-            <ask>
-              Let's identify your app's defining experience - the core interaction that, if we nail it, everything else follows.
+              <ask>
+                Let's identify your app's defining experience - the core interaction that, if we nail it, everything else follows.
   
   When someone describes your app to a friend, what would they say?
   
@@ -1081,9 +1086,9 @@
   - "Real-time collaborative canvas" (Figma)
   
   **What's yours?** What's the ONE experience that defines your app?
-            </ask>
-            <action>
-              Analyze if this core experience has established UX patterns:
+              </ask>
+              <action>
+                Analyze if this core experience has established UX patterns:
   
       Standard patterns exist for:
       - CRUD operations (Create, Read, Update, Delete)
@@ -1100,23 +1105,23 @@
       - Unprecedented content types (before TikTok, vertical short video feeds)
       - Complex multi-step workflows spanning features
       - Innovative gamification or engagement loops
-            </action>
-            <template-output>
-              defining_experience
-            </template-output>
-          </step>
-          <step n="3b" goal="Design novel UX pattern (if needed)">
-            <critical>Skip this step if standard patterns apply. Run only if novel pattern detected.</critical>
-            <check if="novel_pattern_detected">
-              <output>
-                The **{{pattern_name}}** interaction is novel - no established pattern exists yet!
+              </action>
+              <template-output>
+                defining_experience
+              </template-output>
+            </step>
+            <step n="3b" goal="Design novel UX pattern (if needed)">
+              <critical>Skip this step if standard patterns apply. Run only if novel pattern detected.</critical>
+              <check if="novel_pattern_detected">
+                <output>
+                  The **{{pattern_name}}** interaction is novel - no established pattern exists yet!
   
   Core UX challenge: {{challenge_description}}
   
   This is exciting - we get to invent the user experience together. Let's design this interaction systematically.
-              </output>
-              <ask>
-                Let's think through the core mechanics of this {{pattern_name}} interaction:
+                </output>
+                <ask>
+                  Let's think through the core mechanics of this {{pattern_name}} interaction:
   
   1. **User Goal:** What does the user want to accomplish?
   2. **Trigger:** How should they initiate this action? (button, gesture, voice, drag, etc.)
@@ -1125,29 +1130,29 @@
   5. **Errors:** What if something goes wrong? How do they recover?
   
   Walk me through your mental model for this interaction - the ideal experience from the user's perspective.
-              </ask>
-              <template-output>
-                novel_pattern_mechanics
-              </template-output>
-            </check>
-            <check if="!novel_pattern_detected">
-              <action>Skip to Step 3d - standard patterns apply</action>
-            </check>
-          </step>
-          <step n="3c" goal="Explore novel pattern deeply (if novel)">
-            <critical>Skip if not designing novel pattern</critical>
-            <check if="novel_pattern_detected">
-              <ask>
-                Let's explore the {{pattern_name}} interaction more deeply to make it exceptional:
+                </ask>
+                <template-output>
+                  novel_pattern_mechanics
+                </template-output>
+              </check>
+              <check if="!novel_pattern_detected">
+                <action>Skip to Step 3d - standard patterns apply</action>
+              </check>
+            </step>
+            <step n="3c" goal="Explore novel pattern deeply (if novel)">
+              <critical>Skip if not designing novel pattern</critical>
+              <check if="novel_pattern_detected">
+                <ask>
+                  Let's explore the {{pattern_name}} interaction more deeply to make it exceptional:
   
   - **Similar Patterns:** What apps have SIMILAR (not identical) patterns we could learn from?
   - **Speed:** What's the absolute fastest this action could complete?
   - **Delight:** What's the most delightful way to give feedback?
   - **Platform:** Should this work on mobile differently than desktop?
   - **Shareability:** What would make someone show this to a friend?
-              </ask>
-              <action>
-                Document the novel UX pattern:
+                </ask>
+                <action>
+                  Document the novel UX pattern:
           Pattern Name: {{pattern_name}}
           User Goal: {{what_user_accomplishes}}
           Trigger: {{how_initiated}}
@@ -1160,22 +1165,22 @@
           Platform Considerations: {{desktop_vs_mobile_vs_tablet}}
           Accessibility: {{keyboard_screen_reader_support}}
           Inspiration: {{similar_patterns_from_other_apps}}
+                </action>
+                <template-output>
+                  novel_pattern_details
+                </template-output>
+              </check>
+              <check if="!novel_pattern_detected">
+                <action>Skip to Step 3d - standard patterns apply</action>
+              </check>
+            </step>
+            <step n="3d" goal="Define core experience principles">
+              <critical>Establish the guiding principles for the entire experience</critical>
+              <action>
+                Based on the defining experience and any novel patterns, define the core experience principles: - Speed: How fast should key actions feel? - Guidance: How much hand-holding do users need? - Flexibility: How much control vs. simplicity? - Feedback: Subtle or celebratory?
               </action>
-              <template-output>
-                novel_pattern_details
-              </template-output>
-            </check>
-            <check if="!novel_pattern_detected">
-              <action>Skip to Step 3d - standard patterns apply</action>
-            </check>
-          </step>
-          <step n="3d" goal="Define core experience principles">
-            <critical>Establish the guiding principles for the entire experience</critical>
-            <action>
-              Based on the defining experience and any novel patterns, define the core experience principles: - Speed: How fast should key actions feel? - Guidance: How much hand-holding do users need? - Flexibility: How much control vs. simplicity? - Feedback: Subtle or celebratory?
-            </action>
-            <output>
-              Core experience principles established:
+              <output>
+                Core experience principles established:
   
   **Speed:** {{speed_principle}}
   **Guidance:** {{guidance_principle}}
@@ -1183,43 +1188,43 @@
   **Feedback:** {{feedback_principle}}
   
   These principles will guide every UX decision from here forward.
-            </output>
-            <template-output>
-              core_experience_principles
-            </template-output>
-          </step>
-          <step n="4" goal="Discover visual foundation through color theme exploration">
-            <critical>Visual design isn't decoration - it communicates brand and guides attention</critical>
-            <critical>SHOW options, don't just describe them - generate HTML visualizations</critical>
-            <critical>Use color psychology principles: blue=trust, red=energy, green=growth/calm, purple=creativity, etc.</critical>
-            <ask>
-              Do you have existing brand guidelines or a specific color palette in mind? (y/n)
+              </output>
+              <template-output>
+                core_experience_principles
+              </template-output>
+            </step>
+            <step n="4" goal="Discover visual foundation through color theme exploration">
+              <critical>Visual design isn't decoration - it communicates brand and guides attention</critical>
+              <critical>SHOW options, don't just describe them - generate HTML visualizations</critical>
+              <critical>Use color psychology principles: blue=trust, red=energy, green=growth/calm, purple=creativity, etc.</critical>
+              <ask>
+                Do you have existing brand guidelines or a specific color palette in mind? (y/n)
   
   If yes: Share your brand colors, or provide a link to brand guidelines.
   If no: I'll generate theme options based on your project's personality.
-            </ask>
-            <check if="existing_brand == true">
-              <ask>
-                Please provide:
+              </ask>
+              <check if="existing_brand == true">
+                <ask>
+                  Please provide:
   - Primary brand color(s) (hex codes if available)
   - Secondary colors
   - Any brand personality guidelines (professional, playful, minimal, etc.)
   - Link to style guide (if available)
-              </ask>
-              <action>Extract and document brand colors</action>
-              <action>
-                Generate semantic color mappings:
+                </ask>
+                <action>Extract and document brand colors</action>
+                <action>
+                  Generate semantic color mappings:
         - Primary: {{brand_primary}} (main actions, key elements)
         - Secondary: {{brand_secondary}} (supporting actions)
         - Success: {{success_color}}
         - Warning: {{warning_color}}
         - Error: {{error_color}}
         - Neutral: {{gray_scale}}
-              </action>
-            </check>
-            <check if="existing_brand == false">
-              <action>
-                Based on project personality from PRD/brief, identify 3-4 theme directions:
+                </action>
+              </check>
+              <check if="existing_brand == false">
+                <action>
+                  Based on project personality from PRD/brief, identify 3-4 theme directions:
   
         Analyze project for:
         - Industry (fintech → trust/security, creative → bold/expressive, health → calm/reliable)
@@ -1232,9 +1237,9 @@
         2. {{theme_2_name}} ({{personality}}) - {{color_strategy}}
         3. {{theme_3_name}} ({{personality}}) - {{color_strategy}}
         4. {{theme_4_name}} ({{personality}}) - {{color_strategy}}
-              </action>
-              <action>
-                Generate comprehensive HTML color theme visualizer:
+                </action>
+                <action>
+                  Generate comprehensive HTML color theme visualizer:
   
         Create: {color_themes_html}
   
@@ -1265,10 +1270,10 @@
         - Visual style (minimal, bold, playful, professional)
   
         Include CSS with full theme variables for each option.
-              </action>
-              <action>Save HTML visualizer to {color_themes_html}</action>
-              <output>
-                🎨 I've created a color theme visualizer!
+                </action>
+                <action>Save HTML visualizer to {color_themes_html}</action>
+                <output>
+                  🎨 I've created a color theme visualizer!
   
   Open this file in your browser: {color_themes_html}
   
@@ -1280,9 +1285,9 @@
   - Theme personality descriptions
   
   Take your time exploring. Which theme FEELS right for your vision?
-              </output>
-              <ask>
-                Which color theme direction resonates most?
+                </output>
+                <ask>
+                  Which color theme direction resonates most?
   
   You can:
   
@@ -1292,39 +1297,39 @@
   - Describe a custom direction
   
   What speaks to you?
-              </ask>
-              <action>
-                Based on user selection, finalize color palette:
+                </ask>
+                <action>
+                  Based on user selection, finalize color palette:
         - Extract chosen theme colors
         - Apply any requested modifications
         - Document semantic color usage
         - Note rationale for selection
-              </action>
-            </check>
-            <action>
-              Define typography system:
+                </action>
+              </check>
+              <action>
+                Define typography system:
   
       Based on brand personality and chosen colors:
       - Font families (heading, body, monospace)
       - Type scale (h1-h6, body, small, tiny)
       - Font weights and when to use them
       - Line heights for readability
-              <check if="design_system_chosen">Use {{design_system}} default typography as starting point.
+                <check if="design_system_chosen">Use {{design_system}} default typography as starting point.
         Customize if brand requires it.</check>
-            </action>
-            <action>
-              Define spacing and layout foundation: - Base unit (4px, 8px system) - Spacing scale (xs, sm, md, lg, xl, 2xl, etc.) - Layout grid (12-column, custom, or design system default) - Container widths for different breakpoints
-            </action>
-            <template-output>
-              visual_foundation
-            </template-output>
-          </step>
-          <step n="5" goal="Generate design direction mockups for visual decision-making">
-            <critical>This is the game-changer - SHOW actual design directions, don't just discuss them</critical>
-            <critical>Users make better decisions when they SEE options, not imagine them</critical>
-            <critical>Consider platform norms: desktop apps often use sidebar nav, mobile apps use bottom nav or tabs</critical>
-            <action>
-              Based on PRD and core experience, identify 2-3 key screens to mock up:
+              </action>
+              <action>
+                Define spacing and layout foundation: - Base unit (4px, 8px system) - Spacing scale (xs, sm, md, lg, xl, 2xl, etc.) - Layout grid (12-column, custom, or design system default) - Container widths for different breakpoints
+              </action>
+              <template-output>
+                visual_foundation
+              </template-output>
+            </step>
+            <step n="5" goal="Generate design direction mockups for visual decision-making">
+              <critical>This is the game-changer - SHOW actual design directions, don't just discuss them</critical>
+              <critical>Users make better decisions when they SEE options, not imagine them</critical>
+              <critical>Consider platform norms: desktop apps often use sidebar nav, mobile apps use bottom nav or tabs</critical>
+              <action>
+                Based on PRD and core experience, identify 2-3 key screens to mock up:
   
       Priority screens:
       1. Entry point (landing page, dashboard, home screen)
@@ -1337,9 +1342,9 @@
       - Primary action(s)
       - Secondary actions
       - Navigation context
-            </action>
-            <action>
-              Generate 6-8 different design direction variations exploring different UX approaches:
+              </action>
+              <action>
+                Generate 6-8 different design direction variations exploring different UX approaches:
   
       Vary these dimensions:
   
@@ -1369,9 +1374,9 @@
       - Scannable (lists, cards, quick consumption)
       - Immersive (large imagery, storytelling)
       - Data-driven (charts, tables, metrics)
-            </action>
-            <action>
-              Create comprehensive HTML design direction showcase:
+              </action>
+              <action>
+                Create comprehensive HTML design direction showcase:
   
       Create: {design_directions_html}
   
@@ -1405,10 +1410,10 @@
       **Notes Section:**
       - User can click to add notes about each direction
       - "What I like" and "What I'd change" fields
-            </action>
-            <action>Save comprehensive HTML showcase to {design_directions_html}</action>
-            <output>
-              🎨 Design Direction Mockups Generated!
+              </action>
+              <action>Save comprehensive HTML showcase to {design_directions_html}</action>
+              <output>
+                🎨 Design Direction Mockups Generated!
   
   I've created {{mockup_count}} different design approaches for your key screens.
   
@@ -1430,9 +1435,9 @@
   - Add notes about what you like
   
   Take your time - this is a crucial decision!
-            </output>
-            <ask>
-              Which design direction(s) resonate most with your vision?
+              </output>
+              <ask>
+                Which design direction(s) resonate most with your vision?
   
   You can:
   
@@ -1442,9 +1447,9 @@
   - Ask me to explore variations: "Can you show me more options like #4 but with side navigation?"
   
   What speaks to you?
-            </ask>
-            <action>
-              Based on user selection, extract and document design decisions:
+              </ask>
+              <action>
+                Based on user selection, extract and document design decisions:
   
       Chosen Direction: {{direction_number_or_hybrid}}
   
@@ -1470,32 +1475,32 @@
   
       Rationale: {{why_user_chose_this_direction}}
       User notes: {{what_they_liked_and_want_to_change}}
-            </action>
-            <check if="user_wants_modifications">
-              <action>Generate 2-3 refined variations incorporating requested changes</action>
-              <action>Update HTML showcase with refined options</action>
-              <ask>Better? Pick your favorite refined version.</ask>
-            </check>
-            <template-output>
-              design_direction_decision
-            </template-output>
-          </step>
-          <step n="6" goal="Collaborative user journey design">
-            <critical>User journeys are conversations, not just flowcharts</critical>
-            <critical>Design WITH the user, exploring options for each key flow</critical>
-            <action>
-              Extract critical user journeys from PRD: - Primary user tasks - Conversion flows - Onboarding sequence - Content creation workflows - Any complex multi-step processes
-            </action>
-            <action>For each critical journey, identify the goal and current assumptions</action>
-            <for-each journey="critical_user_journeys">
-              <output>
-                **User Journey: {{journey_name}}**
+              </action>
+              <check if="user_wants_modifications">
+                <action>Generate 2-3 refined variations incorporating requested changes</action>
+                <action>Update HTML showcase with refined options</action>
+                <ask>Better? Pick your favorite refined version.</ask>
+              </check>
+              <template-output>
+                design_direction_decision
+              </template-output>
+            </step>
+            <step n="6" goal="Collaborative user journey design">
+              <critical>User journeys are conversations, not just flowcharts</critical>
+              <critical>Design WITH the user, exploring options for each key flow</critical>
+              <action>
+                Extract critical user journeys from PRD: - Primary user tasks - Conversion flows - Onboarding sequence - Content creation workflows - Any complex multi-step processes
+              </action>
+              <action>For each critical journey, identify the goal and current assumptions</action>
+              <for-each journey="critical_user_journeys">
+                <output>
+                  **User Journey: {{journey_name}}**
   
   User goal: {{what_user_wants_to_accomplish}}
   Current entry point: {{where_journey_starts}}
-              </output>
-              <ask>
-                Let's design the flow for {{journey_name}}.
+                </output>
+                <ask>
+                  Let's design the flow for {{journey_name}}.
   
   Walk me through how a user should accomplish this task:
   
@@ -1512,33 +1517,33 @@
   - Should we show everything upfront, or progressively?
   
   Share your mental model for this flow.
-              </ask>
-              <action>
-                Based on journey complexity, present 2-3 flow approach options:
-                <check if="simple_linear_journey">
-                  Option A: Single-screen approach (all inputs/actions on one page)
+                </ask>
+                <action>
+                  Based on journey complexity, present 2-3 flow approach options:
+                  <check if="simple_linear_journey">
+                    Option A: Single-screen approach (all inputs/actions on one page)
           Option B: Wizard/stepper approach (split into clear steps)
           Option C: Hybrid (main flow on one screen, advanced options collapsed)
-                </check>
-                <check if="complex_branching_journey">
-                  Option A: Guided flow (system determines next step based on inputs)
+                  </check>
+                  <check if="complex_branching_journey">
+                    Option A: Guided flow (system determines next step based on inputs)
           Option B: User-driven navigation (user chooses path)
           Option C: Adaptive (simple mode vs advanced mode toggle)
-                </check>
-                <check if="creation_journey">
-                  Option A: Template-first (start from templates, customize)
+                  </check>
+                  <check if="creation_journey">
+                    Option A: Template-first (start from templates, customize)
           Option B: Blank canvas (full flexibility, more guidance needed)
           Option C: Progressive creation (start simple, add complexity)
-                </check>
-                For each option, explain:
+                  </check>
+                  For each option, explain:
         - User experience: {{what_it_feels_like}}
         - Pros: {{benefits}}
         - Cons: {{tradeoffs}}
         - Best for: {{user_type_or_scenario}}
-              </action>
-              <ask>Which approach fits best? Or should we blend elements?</ask>
-              <action>
-                Create detailed flow documentation:
+                </action>
+                <ask>Which approach fits best? Or should we blend elements?</ask>
+                <action>
+                  Create detailed flow documentation:
   
         Journey: {{journey_name}}
         User Goal: {{goal}}
@@ -1564,17 +1569,17 @@
         - Next action: {{what_happens_next}}
   
         [Generate Mermaid diagram showing complete flow]
-              </action>
-            </for-each>
-            <template-output>
-              user_journey_flows
-            </template-output>
-          </step>
-          <step n="7" goal="Component library strategy and custom component design">
-            <critical>Balance design system components with custom needs</critical>
-            <action>Based on design system chosen + design direction mockups + user journeys:</action>
-            <action>
-              Identify required components:
+                </action>
+              </for-each>
+              <template-output>
+                user_journey_flows
+              </template-output>
+            </step>
+            <step n="7" goal="Component library strategy and custom component design">
+              <critical>Balance design system components with custom needs</critical>
+              <action>Based on design system chosen + design direction mockups + user journeys:</action>
+              <action>
+                Identify required components:
   
       From Design System (if applicable):
       - {{list_of_components_provided}}
@@ -1585,9 +1590,9 @@
   
       Components Requiring Heavy Customization:
       - {{component}} ({{what_customization}})
-            </action>
-            <ask>
-              For components not covered by {{design_system}}, let's define them together.
+              </action>
+              <ask>
+                For components not covered by {{design_system}}, let's define them together.
   
   Component: {{custom_component_name}}
   
@@ -1596,9 +1601,9 @@
   3. What actions can users take with it?
   4. What states does it have? (default, hover, active, loading, error, disabled, etc.)
   5. Are there variants? (sizes, styles, layouts)
-            </ask>
-            <action>
-              For each custom component, document:
+              </ask>
+              <action>
+                For each custom component, document:
   
       Component Name: {{name}}
       Purpose: {{user_facing_purpose}}
@@ -1626,17 +1631,17 @@
       - ARIA role: {{role}}
       - Keyboard navigation: {{keys}}
       - Screen reader: {{announcement}}
-            </action>
-            <template-output>
-              component_library_strategy
-            </template-output>
-          </step>
-          <step n="8" goal="Define UX pattern decisions for consistency">
-            <critical>These are implementation patterns for UX - ensure consistency across the app</critical>
-            <critical>Like the architecture workflow's implementation patterns, but for user experience</critical>
-            <critical>These decisions prevent "it works differently on every page" confusion</critical>
-            <action>
-              Based on chosen components and journeys, identify UX consistency decisions needed:
+              </action>
+              <template-output>
+                component_library_strategy
+              </template-output>
+            </step>
+            <step n="8" goal="Define UX pattern decisions for consistency">
+              <critical>These are implementation patterns for UX - ensure consistency across the app</critical>
+              <critical>Like the architecture workflow's implementation patterns, but for user experience</critical>
+              <critical>These decisions prevent "it works differently on every page" confusion</critical>
+              <action>
+                Based on chosen components and journeys, identify UX consistency decisions needed:
   
       BUTTON HIERARCHY (How users know what's most important):
       - Primary action: {{style_and_usage}}
@@ -1696,14 +1701,14 @@
       - Format: {{relative_vs_absolute}}
       - Timezone handling: {{user_local_utc}}
       - Pickers: {{calendar_dropdown_input}}
-            </action>
-            <output>
-              I've identified {{pattern_count}} UX pattern categories that need consistent decisions across your app. Let's make these decisions together to ensure users get a consistent experience.
+              </action>
+              <output>
+                I've identified {{pattern_count}} UX pattern categories that need consistent decisions across your app. Let's make these decisions together to ensure users get a consistent experience.
   
   These patterns determine how {{project_name}} behaves in common situations - like how buttons work, how forms validate, how modals behave, etc.
-            </output>
-            <ask>
-              For each pattern category below, I'll present options and a recommendation. Tell me your preferences or ask questions.
+              </output>
+              <ask>
+                For each pattern category below, I'll present options and a recommendation. Tell me your preferences or ask questions.
   
   **Pattern Categories to Decide:**
   
@@ -1723,25 +1728,25 @@
   1. Go through each pattern category one by one (thorough)
   2. Focus only on the most critical patterns for your app (focused)
   3. Let me recommend defaults and you override where needed (efficient)
-            </ask>
-            <action>
-              Based on user choice, facilitate pattern decisions with appropriate depth: - If thorough: Present all categories with options and reasoning - If focused: Identify 3-5 critical patterns based on app type - If efficient: Recommend smart defaults, ask for overrides
+              </ask>
+              <action>
+                Based on user choice, facilitate pattern decisions with appropriate depth: - If thorough: Present all categories with options and reasoning - If focused: Identify 3-5 critical patterns based on app type - If efficient: Recommend smart defaults, ask for overrides
   
       For each pattern decision, document:
       - Pattern category
       - Chosen approach
       - Rationale (why this choice for this app)
       - Example scenarios where it applies
-            </action>
-            <template-output>
-              ux_pattern_decisions
-            </template-output>
-          </step>
-          <step n="9" goal="Responsive and accessibility strategy">
-            <critical>Responsive design isn't just "make it smaller" - it's adapting the experience</critical>
-            <action>Based on platform requirements from PRD and chosen design direction:</action>
-            <ask>
-              Let's define how your app adapts across devices.
+              </action>
+              <template-output>
+                ux_pattern_decisions
+              </template-output>
+            </step>
+            <step n="9" goal="Responsive and accessibility strategy">
+              <critical>Responsive design isn't just "make it smaller" - it's adapting the experience</critical>
+              <action>Based on platform requirements from PRD and chosen design direction:</action>
+              <ask>
+                Let's define how your app adapts across devices.
   
   Target devices from PRD: {{devices}}
   
@@ -1763,9 +1768,9 @@
      - Touch target sizes adequate?
   
   What's most important for each screen size?
-            </ask>
-            <action>
-              Define breakpoint strategy:
+              </ask>
+              <action>
+                Define breakpoint strategy:
   
       Based on chosen layout pattern from design direction:
   
@@ -1781,11 +1786,11 @@
       - Tables: {{horizontal_scroll_card_view_hide_columns}}
       - Modals: {{full_screen_on_mobile}}
       - Forms: {{layout_changes}}
-            </action>
-            <action>
-              Define accessibility strategy:
-              <ask>
-                Let's define your accessibility strategy.
+              </action>
+              <action>
+                Define accessibility strategy:
+                <ask>
+                  Let's define your accessibility strategy.
   
   Accessibility means your app works for everyone, including people with disabilities:
   
@@ -1809,8 +1814,8 @@
   Based on your deployment intent: {{recommendation}}
   
   **What level should we target?**
-              </ask>
-              Accessibility Requirements:
+                </ask>
+                Accessibility Requirements:
   
       Compliance Target: {{WCAG_level}}
   
@@ -1828,16 +1833,16 @@
       - Automated: {{tools}} (Lighthouse, axe DevTools)
       - Manual: Keyboard-only navigation testing
       - Screen reader: {{tool}} testing
-            </action>
-            <template-output>
-              responsive_accessibility_strategy
-            </template-output>
-          </step>
-          <step n="10" goal="Finalize UX design specification">
-            <critical>The document is built progressively throughout - now finalize and offer extensions</critical>
-            <action>Ensure document is complete with all template-output sections filled</action>
-            <action>
-              Generate completion summary:
+              </action>
+              <template-output>
+                responsive_accessibility_strategy
+              </template-output>
+            </step>
+            <step n="10" goal="Finalize UX design specification">
+              <critical>The document is built progressively throughout - now finalize and offer extensions</critical>
+              <action>Ensure document is complete with all template-output sections filled</action>
+              <action>
+                Generate completion summary:
   
       "Excellent work! Your UX Design Specification is complete.
   
@@ -1862,19 +1867,19 @@
       - All your design decisions are documented with reasoning for future reference
   
       You've made thoughtful choices through visual collaboration that will create a great user experience. Ready for design refinement and implementation!"
-            </action>
-            <action>Save final document to {default_output_file}</action>
-            <check if="standalone_mode != true">
-              <action>Load the FULL file: {output_folder}/bmm-workflow-status.yaml</action>
-              <action>Find workflow_status key "create-design"</action>
-              <critical>ONLY write the file path as the status value - no other text, notes, or metadata</critical>
-              <action>Update workflow_status["create-design"] = "{default_output_file}"</action>
-              <action>Save file, preserving ALL comments and structure including STATUS DEFINITIONS</action>
-              <action>Find first non-completed workflow in workflow_status (next workflow to do)</action>
-              <action>Determine next agent from path file based on next workflow</action>
-            </check>
-            <ask>
-              🎨 **One more thing!** Want to see your design come to life?
+              </action>
+              <action>Save final document to {default_output_file}</action>
+              <check if="standalone_mode != true">
+                <action>Load the FULL file: {output_folder}/bmm-workflow-status.yaml</action>
+                <action>Find workflow_status key "create-design"</action>
+                <critical>ONLY write the file path as the status value - no other text, notes, or metadata</critical>
+                <action>Update workflow_status["create-design"] = "{default_output_file}"</action>
+                <action>Save file, preserving ALL comments and structure including STATUS DEFINITIONS</action>
+                <action>Find first non-completed workflow in workflow_status (next workflow to do)</action>
+                <action>Determine next agent from path file based on next workflow</action>
+              </check>
+              <ask>
+                🎨 **One more thing!** Want to see your design come to life?
   
   I can generate interactive HTML mockups using all your design choices:
   
@@ -1897,10 +1902,10 @@
   **4. Skip for now** - I'll just finalize the documentation
   
   What would you like?
-            </ask>
-            <check if="user_choice == 'key_screens' or similar">
-              <action>
-                Generate comprehensive multi-panel HTML showcase:
+              </ask>
+              <check if="user_choice == 'key_screens' or similar">
+                <action>
+                  Generate comprehensive multi-panel HTML showcase:
   
         Create: {final_app_showcase_html}
   
@@ -1931,9 +1936,9 @@
         - Navigation highlighting
   
         Output as single HTML file with inline CSS and minimal JavaScript
-              </action>
-              <output>
-                ✨ **Created: {final_app_showcase_html}**
+                </action>
+                <output>
+                  ✨ **Created: {final_app_showcase_html}**
   
   Open this file in your browser to see {{project_name}} come to life with all your design choices applied! You can:
   
@@ -1943,18 +1948,18 @@
   - Share with stakeholders for feedback
   
   This showcases exactly what developers will build.
-              </output>
-            </check>
-            <check if="user_choice == 'user_journey' or similar">
-              <ask>
-                Which user journey would you like to visualize?
+                </output>
+              </check>
+              <check if="user_choice == 'user_journey' or similar">
+                <ask>
+                  Which user journey would you like to visualize?
   
   {{list_of_designed_journeys}}
   
   Pick one, or tell me which flow you want to see!
-              </ask>
-              <action>
-                Generate step-by-step journey HTML:
+                </ask>
+                <action>
+                  Generate step-by-step journey HTML:
   
         Create: {journey_visualization_html}
   
@@ -1967,16 +1972,16 @@
         - Annotate design decisions on hover
   
         Make it feel like a real user flow through the app
-              </action>
-              <output>
-                ✨ **Created: {journey_visualization_html}**
+                </action>
+                <output>
+                  ✨ **Created: {journey_visualization_html}**
   
   Walk through the {{selected_journey}} flow step-by-step in your browser! This shows the exact experience users will have, with all your UX decisions applied.
-              </output>
-            </check>
-            <check if="user_choice == 'something_else'">
-              <ask>
-                Tell me what you'd like to visualize! I can generate HTML mockups for:
+                </output>
+              </check>
+              <check if="user_choice == 'something_else'">
+                <ask>
+                  Tell me what you'd like to visualize! I can generate HTML mockups for:
   - Specific screens or features
   - Interactive components
   - Responsive breakpoint comparisons
@@ -1985,24 +1990,24 @@
   - Whatever you envision!
   
   What should I create?
-              </ask>
-              <action>
-                Generate custom HTML visualization based on user request:
+                </ask>
+                <action>
+                  Generate custom HTML visualization based on user request:
         - Parse what they want to see
         - Apply all relevant design decisions
         - Create interactive HTML mockup
         - Make it visually compelling and functional
-              </action>
-              <output>
-                ✨ **Created: {{custom_visualization_file}}**
+                </action>
+                <output>
+                  ✨ **Created: {{custom_visualization_file}}**
   
   {{description_of_what_was_created}}
   
   Open in browser to explore!
-              </output>
-            </check>
-            <output>
-              **✅ UX Design Specification Complete!**
+                </output>
+              </check>
+              <output>
+                **✅ UX Design Specification Complete!**
   
   **Core Deliverables:**
   
@@ -2031,16 +2036,16 @@
   - Component Showcase / AI Frontend Prompt workflows
   - Solution Architecture workflow (with UX context)
     {{/if}}
-            </output>
-            <template-output>
-              completion_summary
-            </template-output>
-          </step>
-        </workflow>
-        ]]>
-      </file>
-      <file id="bmad/bmm/workflows/2-plan-workflows/create-ux-design/checklist.md" type="md">
-        <![CDATA[# Create UX Design Workflow Validation Checklist
+              </output>
+              <template-output>
+                completion_summary
+              </template-output>
+            </step>
+          </workflow>
+          ]]>
+        </file>
+        <file id="bmad/bmm/workflows/2-plan-workflows/create-ux-design/checklist.md" type="md">
+          <![CDATA[# Create UX Design Workflow Validation Checklist
   
   **Purpose**: Validate UX Design Specification is complete, collaborative, and implementation-ready.
   
@@ -2351,9 +2356,9 @@
   
   _This checklist validates collaborative UX design facilitation, not template generation. A successful UX workflow creates design decisions WITH the user through visual exploration and informed choices._
   ]]>
-        </file>
-        <file id="bmad/bmm/workflows/2-plan-workflows/create-ux-design/ux-design-template.md" type="md">
-          <![CDATA[# {{project_name}} UX Design Specification
+          </file>
+          <file id="bmad/bmm/workflows/2-plan-workflows/create-ux-design/ux-design-template.md" type="md">
+            <![CDATA[# {{project_name}} UX Design Specification
   
   _Created on {{date}} by {{user_name}}_
   _Generated using BMad Method - Create UX Design Workflow v1.0_
@@ -2477,7 +2482,7 @@
   _This section will be populated if additional UX artifacts are generated through follow-up workflows._
   
   <!-- Additional deliverables added here by other workflows -->
-            ### Next Steps & Follow-Up Workflows
+              ### Next Steps & Follow-Up Workflows
   
   This UX Design Specification can serve as input to:
   
@@ -2498,11 +2503,11 @@
   
   _This UX Design Specification was created through collaborative design facilitation, not template generation. All decisions were made with user input and are documented with rationale._
   ]]>
-          </file>
-          <file id="bmad/core/workflows/party-mode/workflow.yaml" type="yaml">
-            <![CDATA[name: party-mode
+            </file>
+            <file id="bmad/core/workflows/party-mode/workflow.yaml" type="yaml">
+              <![CDATA[name: party-mode
   description: >
-              -
+                -
     Orchestrates group discussions between all installed BMAD agents, enabling
     natural multi-agent conversations
   author: BMad
@@ -2512,17 +2517,17 @@
     - 'bmad/core/workflows/party-mode/instructions.md'
     - 'bmad/_cfg/agent-manifest.csv'
   ]]>
-            </file>
-            <file id="bmad/core/workflows/party-mode/instructions.md" type="md">
-              <![CDATA[# Party Mode - Multi-Agent Discussion Instructions
+              </file>
+              <file id="bmad/core/workflows/party-mode/instructions.md" type="md">
+                <![CDATA[# Party Mode - Multi-Agent Discussion Instructions
   
   <critical>The workflow execution engine is governed by: {project_root}/bmad/core/tasks/workflow.xml</critical>
-              <critical>This workflow orchestrates group discussions between all installed BMAD agents</critical>
-              <workflow>
-                <step n="1" goal="Load Agent Manifest and Configurations">
-                  <action>Load the agent manifest CSV from {{agent_manifest}}</action>
-                  <action>Parse CSV to extract all agent entries with their condensed information:</action>
-                  - name (agent identifier)
+                <critical>This workflow orchestrates group discussions between all installed BMAD agents</critical>
+                <workflow>
+                  <step n="1" goal="Load Agent Manifest and Configurations">
+                    <action>Load the agent manifest CSV from {{agent_manifest}}</action>
+                    <action>Parse CSV to extract all agent entries with their condensed information:</action>
+                    - name (agent identifier)
       - displayName (agent's persona name)
       - title (formal position)
       - icon (visual identifier)
@@ -2532,14 +2537,14 @@
       - principles (decision-making philosophy)
       - module (source module)
       - path (file location)
-                  <action>Build complete agent roster with merged personalities</action>
-                  <action>Store agent data for use in conversation orchestration</action>
-                </step>
-                <step n="2" goal="Initialize Party Mode">
-                  <action>Announce party mode activation with enthusiasm</action>
-                  <action>List all participating agents with their merged information:</action>
-                  <format>
-                    🎉 PARTY MODE ACTIVATED! 🎉
+                    <action>Build complete agent roster with merged personalities</action>
+                    <action>Store agent data for use in conversation orchestration</action>
+                  </step>
+                  <step n="2" goal="Initialize Party Mode">
+                    <action>Announce party mode activation with enthusiasm</action>
+                    <action>List all participating agents with their merged information:</action>
+                    <format>
+                      🎉 PARTY MODE ACTIVATED! 🎉
       All agents are here for a group discussion!
   
       Participating agents:
@@ -2549,125 +2554,125 @@
       [Total count] agents ready to collaborate!
   
       What would you like to discuss with the team?
-                  </format>
-                  <action>Wait for user to provide initial topic or question</action>
-                </step>
-                <step n="3" goal="Orchestrate Multi-Agent Discussion" repeat="until-exit">
-                  <action>For each user message or topic:</action>
-                  <substep n="3a" goal="Determine Relevant Agents">
-                    <action>Analyze the user's message/question</action>
-                    <action>Identify which agents would naturally respond based on:</action>
-                    - Their role and capabilities (from merged data)
+                    </format>
+                    <action>Wait for user to provide initial topic or question</action>
+                  </step>
+                  <step n="3" goal="Orchestrate Multi-Agent Discussion" repeat="until-exit">
+                    <action>For each user message or topic:</action>
+                    <substep n="3a" goal="Determine Relevant Agents">
+                      <action>Analyze the user's message/question</action>
+                      <action>Identify which agents would naturally respond based on:</action>
+                      - Their role and capabilities (from merged data)
         - Their stated principles
         - Their memories/context if relevant
         - Their collaboration patterns
-                    <action>Select 2-3 most relevant agents for this response</action>
-                    <note>If user addresses specific agent by name, prioritize that agent</note>
-                  </substep>
-                  <substep n="3b" goal="Generate In-Character Responses">
-                    <action>For each selected agent, generate authentic response:</action>
-                    <action>Use the agent's merged personality data:</action>
-                    - Apply their communicationStyle exactly
+                      <action>Select 2-3 most relevant agents for this response</action>
+                      <note>If user addresses specific agent by name, prioritize that agent</note>
+                    </substep>
+                    <substep n="3b" goal="Generate In-Character Responses">
+                      <action>For each selected agent, generate authentic response:</action>
+                      <action>Use the agent's merged personality data:</action>
+                      - Apply their communicationStyle exactly
         - Reflect their principles in reasoning
         - Draw from their identity and role for expertise
         - Maintain their unique voice and perspective
-                    <action>Enable natural cross-talk between agents:</action>
-                    - Agents can reference each other by name
+                      <action>Enable natural cross-talk between agents:</action>
+                      - Agents can reference each other by name
         - Agents can build on previous points
         - Agents can respectfully disagree or offer alternatives
         - Agents can ask follow-up questions to each other
-                  </substep>
-                  <substep n="3c" goal="Handle Questions and Interactions">
-                    <check if="an agent asks the user a direct question">
-                      <action>Clearly highlight the question</action>
-                      <action>End that round of responses</action>
-                      <action>Display: "[Agent Name]: [Their question]"</action>
-                      <action>Display: "[Awaiting user response...]"</action>
-                      <action>WAIT for user input before continuing</action>
-                    </check>
-                    <check if="agents ask each other questions">
-                      <action>Allow natural back-and-forth in the same response round</action>
-                      <action>Maintain conversational flow</action>
-                    </check>
-                    <check if="discussion becomes circular or repetitive">
-                      <action>The BMad Master will summarize</action>
-                      <action>Redirect to new aspects or ask for user guidance</action>
-                    </check>
-                  </substep>
-                  <substep n="3d" goal="Format and Present Responses">
-                    <action>Present each agent's contribution clearly:</action>
-                    <format>
-                      [Agent Name]: [Their response in their voice/style]
+                    </substep>
+                    <substep n="3c" goal="Handle Questions and Interactions">
+                      <check if="an agent asks the user a direct question">
+                        <action>Clearly highlight the question</action>
+                        <action>End that round of responses</action>
+                        <action>Display: "[Agent Name]: [Their question]"</action>
+                        <action>Display: "[Awaiting user response...]"</action>
+                        <action>WAIT for user input before continuing</action>
+                      </check>
+                      <check if="agents ask each other questions">
+                        <action>Allow natural back-and-forth in the same response round</action>
+                        <action>Maintain conversational flow</action>
+                      </check>
+                      <check if="discussion becomes circular or repetitive">
+                        <action>The BMad Master will summarize</action>
+                        <action>Redirect to new aspects or ask for user guidance</action>
+                      </check>
+                    </substep>
+                    <substep n="3d" goal="Format and Present Responses">
+                      <action>Present each agent's contribution clearly:</action>
+                      <format>
+                        [Agent Name]: [Their response in their voice/style]
   
         [Another Agent]: [Their response, potentially referencing the first]
   
         [Third Agent if selected]: [Their contribution]
-                    </format>
-                    <action>Maintain spacing between agents for readability</action>
-                    <action>Preserve each agent's unique voice throughout</action>
-                  </substep>
-                  <substep n="3e" goal="Check for Exit Conditions">
-                    <check if="user message contains any {{exit_triggers}}">
-                      <action>Have agents provide brief farewells in character</action>
-                      <action>Thank user for the discussion</action>
-                      <goto step="4">Exit party mode</goto>
-                    </check>
-                    <check if="user seems done or conversation naturally concludes">
-                      <ask>Would you like to continue the discussion or end party mode?</ask>
-                      <check if="user indicates end">
+                      </format>
+                      <action>Maintain spacing between agents for readability</action>
+                      <action>Preserve each agent's unique voice throughout</action>
+                    </substep>
+                    <substep n="3e" goal="Check for Exit Conditions">
+                      <check if="user message contains any {{exit_triggers}}">
+                        <action>Have agents provide brief farewells in character</action>
+                        <action>Thank user for the discussion</action>
                         <goto step="4">Exit party mode</goto>
                       </check>
-                    </check>
-                  </substep>
-                </step>
-                <step n="4" goal="Exit Party Mode">
-                  <action>Have 2-3 agents provide characteristic farewells to the user, and 1-2 to each other</action>
-                  <format>
-                    [Agent 1]: [Brief farewell in their style]
+                      <check if="user seems done or conversation naturally concludes">
+                        <ask>Would you like to continue the discussion or end party mode?</ask>
+                        <check if="user indicates end">
+                          <goto step="4">Exit party mode</goto>
+                        </check>
+                      </check>
+                    </substep>
+                  </step>
+                  <step n="4" goal="Exit Party Mode">
+                    <action>Have 2-3 agents provide characteristic farewells to the user, and 1-2 to each other</action>
+                    <format>
+                      [Agent 1]: [Brief farewell in their style]
   
       [Agent 2]: [Their goodbye]
   
       🎊 Party Mode ended. Thanks for the great discussion!
-                  </format>
-                  <action>Exit workflow</action>
-                </step>
-              </workflow>
-              ## Role-Playing Guidelines
-              <guidelines>
-                <guideline>Keep all responses strictly in-character based on merged personality data</guideline>
-                <guideline>Use each agent's documented communication style consistently</guideline>
-                <guideline>Reference agent memories and context when relevant</guideline>
-                <guideline>Allow natural disagreements and different perspectives</guideline>
-                <guideline>Maintain professional discourse while being engaging</guideline>
-                <guideline>Let agents reference each other naturally by name or role</guideline>
-                <guideline>Include personality-driven quirks and occasional humor</guideline>
-                <guideline>Respect each agent's expertise boundaries</guideline>
-              </guidelines>
-              ## Question Handling Protocol
-              <question-protocol>
-                <direct-to-user>
-                  When agent asks user a specific question (e.g., "What's your budget?"):
+                    </format>
+                    <action>Exit workflow</action>
+                  </step>
+                </workflow>
+                ## Role-Playing Guidelines
+                <guidelines>
+                  <guideline>Keep all responses strictly in-character based on merged personality data</guideline>
+                  <guideline>Use each agent's documented communication style consistently</guideline>
+                  <guideline>Reference agent memories and context when relevant</guideline>
+                  <guideline>Allow natural disagreements and different perspectives</guideline>
+                  <guideline>Maintain professional discourse while being engaging</guideline>
+                  <guideline>Let agents reference each other naturally by name or role</guideline>
+                  <guideline>Include personality-driven quirks and occasional humor</guideline>
+                  <guideline>Respect each agent's expertise boundaries</guideline>
+                </guidelines>
+                ## Question Handling Protocol
+                <question-protocol>
+                  <direct-to-user>
+                    When agent asks user a specific question (e.g., "What's your budget?"):
       - End that round immediately after the question
       - Clearly highlight the questioning agent and their question
       - Wait for user response before any agent continues
-                </direct-to-user>
-                <rhetorical>Agents can ask rhetorical or thinking-aloud questions without pausing</rhetorical>
-                <inter-agent>
-                  Agents can question each other and respond naturally within same round
-                </inter-agent>
-              </question-protocol>
-              ## Moderation Notes
-              <moderation>
-                <note>If discussion becomes circular, have bmad-master summarize and redirect</note>
-                <note>If user asks for specific agent, let that agent take primary lead</note>
-                <note>Balance fun and productivity based on conversation tone</note>
-                <note>Ensure all agents stay true to their merged personalities</note>
-                <note>Exit gracefully when user indicates completion</note>
-              </moderation>
-              ]]>
-            </file>
-            <file id="bmad/_cfg/agent-manifest.csv" type="text">
-              <![CDATA[name,displayName,title,icon,role,identity,communicationStyle,principles,module,path
+                  </direct-to-user>
+                  <rhetorical>Agents can ask rhetorical or thinking-aloud questions without pausing</rhetorical>
+                  <inter-agent>
+                    Agents can question each other and respond naturally within same round
+                  </inter-agent>
+                </question-protocol>
+                ## Moderation Notes
+                <moderation>
+                  <note>If discussion becomes circular, have bmad-master summarize and redirect</note>
+                  <note>If user asks for specific agent, let that agent take primary lead</note>
+                  <note>Balance fun and productivity based on conversation tone</note>
+                  <note>Ensure all agents stay true to their merged personalities</note>
+                  <note>Exit gracefully when user indicates completion</note>
+                </moderation>
+                ]]>
+              </file>
+              <file id="bmad/_cfg/agent-manifest.csv" type="text">
+                <![CDATA[name,displayName,title,icon,role,identity,communicationStyle,principles,module,path
   "analyst","Mary","Business Analyst","📊","Strategic Business Analyst + Requirements Expert","Senior analyst with deep expertise in market research, competitive analysis, and requirements elicitation. Specializes in translating vague needs into actionable specs.","Systematic and probing. Connects dots others miss. Structures findings hierarchically. Uses precise unambiguous language. Ensures all stakeholder voices heard.","Every business challenge has root causes waiting to be discovered. Ground findings in verifiable evidence. Articulate requirements with absolute precision.","bmm","bmad/bmm/agents/analyst.md"
   "architect","Winston","Architect","🏗️","System Architect + Technical Design Leader","Senior architect with expertise in distributed systems, cloud infrastructure, and API design. Specializes in scalable patterns and technology selection.","Pragmatic in technical discussions. Balances idealism with reality. Always connects decisions to business value and user impact. Prefers boring tech that works.","User journeys drive technical decisions. Embrace boring technology for stability. Design simple solutions that scale when needed. Developer productivity is architecture.","bmm","bmad/bmm/agents/architect.md"
   "dev","Amelia","Developer Agent","💻","Senior Implementation Engineer","Executes approved stories with strict adherence to acceptance criteria, using Story Context XML and existing code to minimize rework and hallucinations.","Succinct and checklist-driven. Cites specific paths and AC IDs. Asks clarifying questions only when inputs missing. Refuses to invent when info lacking.","Story Context XML is the single source of truth. Reuse existing interfaces over rebuilding. Every change maps to specific AC. Tests pass 100% or story isn't done.","bmm","bmad/bmm/agents/dev.md"
@@ -2688,5 +2693,5 @@
   "combinatorial-genius","Steve Jobs","Combinatorial Genius","🍎","Master of Intersection Thinking + Taste Curator","Legendary innovator who connected technology with liberal arts. Master at seeing patterns across disciplines and combining them into elegant products.","Talks in reality distortion field mode - insanely great, magical, revolutionary, makes impossible seem inevitable","Innovation happens at intersections. Taste is about saying NO to 1000 things. Stay hungry stay foolish. Simplicity is sophistication.","cis",""
   "frame-expert","Saif Ullah","Visual Design & Diagramming Expert","🎨","Expert Visual Designer & Diagramming Specialist","Expert who creates visual representations using Excalidraw with optimized, reusable components. Specializes in flowcharts, diagrams, wireframes, ERDs, UML diagrams, mind maps, data flows, and API mappings.","Visual-first, structured, detail-oriented, composition-focused. Presents options as numbered lists for easy selection.","Composition Over Creation - Use reusable components and templates. Minimal Payload - Strip unnecessary metadata. Reference-Based Design - Use library references. Structured Approach - Follow task-specific workflows. Clean Output - Remove history and unused styles.","bmm","bmad/bmm/agents/frame-expert.md"
   ]]>
-              </file>
-            </agent-bundle>
+                </file>
+              </agent-bundle>
