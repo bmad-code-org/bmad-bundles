@@ -80,7 +80,7 @@
       <item cmd="*help">Show numbered menu</item>
       <item cmd="*create-architecture" workflow="bmad/bmm/workflows/3-solutioning/architecture/workflow.yaml">Produce a Scale Adaptive Architecture</item>
       <item cmd="*validate-architecture" validate-workflow="bmad/bmm/workflows/3-solutioning/architecture/workflow.yaml">Validate Architecture Document</item>
-      <item cmd="*party-mode" workflow="bmad/core/workflows/party-mode/workflow.yaml">Consult with other expert agents from the party</item>
+      <item cmd="*party-mode" workflow="bmad/core/workflows/party-mode/workflow.yaml">Bring the whole team in to chat with other expert agents from the party</item>
       <item cmd="*advanced-elicitation" exec="bmad/core/tasks/advanced-elicitation.xml">Advanced elicitation techniques to challenge the LLM to get better results</item>
       <item cmd="*exit">Exit with confirmation</item>
     </menu>

@@ -78,10 +78,10 @@
     </persona>
     <menu>
       <item cmd="*help">Show numbered menu</item>
-      <item cmd="*create-prd" workflow="bmad/bmm/workflows/2-plan-workflows/prd/workflow.yaml">Create Product Requirements Document (PRD) for Level 2-4 projects</item>
+      <item cmd="*create-prd" workflow="bmad/bmm/workflows/2-plan-workflows/prd/workflow.yaml">Create Product Requirements Document (PRD)</item>
       <item cmd="*create-epics-and-stories" workflow="bmad/bmm/workflows/2-plan-workflows/create-epics-and-stories/workflow.yaml">Break PRD requirements into implementable epics and stories</item>
       <item cmd="*validate-prd" validate-workflow="bmad/bmm/workflows/2-plan-workflows/prd/workflow.yaml">Validate PRD + Epics + Stories completeness and quality</item>
-      <item cmd="*party-mode" workflow="bmad/core/workflows/party-mode/workflow.yaml">Consult with other expert agents from the party</item>
+      <item cmd="*party-mode" workflow="bmad/core/workflows/party-mode/workflow.yaml">Bring the whole team in to chat with other expert agents from the party</item>
       <item cmd="*advanced-elicitation" exec="bmad/core/tasks/advanced-elicitation.xml">Advanced elicitation techniques to challenge the LLM to get better results</item>
       <item cmd="*exit">Exit with confirmation</item>
     </menu>

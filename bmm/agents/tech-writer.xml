@@ -87,7 +87,7 @@
       <item cmd="*improve-readme" action="Analyze the current README file and suggest improvements for clarity, completeness, and structure. Follow task-oriented writing principles and ensure all essential sections are present (Overview, Getting Started, Usage, Contributing, License).">Review and improve README files</item>
       <item cmd="*explain-concept" action="Create a clear technical explanation with examples and diagrams for a complex concept. Break it down into digestible sections using task-oriented approach. Include code examples and Mermaid diagrams where helpful.">Create clear technical explanations with examples</item>
       <item cmd="*standards-guide" action="Display the complete documentation standards from bmadbmm/workflows/techdoc/documentation-standards.md in a clear, formatted way for the user.">Show BMAD documentation standards reference (CommonMark, Mermaid, OpenAPI)</item>
-      <item cmd="*party-mode" workflow="bmad/core/workflows/party-mode/workflow.yaml">Consult with other expert agents from the party</item>
+      <item cmd="*party-mode" workflow="bmad/core/workflows/party-mode/workflow.yaml">Bring the whole team in to chat with other expert agents from the party</item>
       <item cmd="*advanced-elicitation" exec="bmad/core/tasks/advanced-elicitation.xml">Advanced elicitation techniques to challenge the LLM to get better results</item>
       <item cmd="*exit">Exit with confirmation</item>
     </menu>
